@@ -5,6 +5,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
@@ -19,7 +20,8 @@ type gui struct {
 
 	list         *widget.List
 	search       *widget.Entry
-	titleLabel   *widget.Label
+	logo         *canvas.Image
+	langRadio    *widget.RadioGroup
 	configBtn    *widget.Button
 	aboutBtn     *widget.Button
 	detailTitle  *widget.Label
@@ -188,7 +190,20 @@ func (g *gui) build() {
 
 	configMenu := g.buildConfigMenu()
 
-	g.titleLabel = widget.NewLabel("")
+	g.logo = canvas.NewImageFromResource(resourceLogo)
+	g.logo.FillMode = canvas.ImageFillContain
+	g.logo.SetMinSize(fyne.NewSize(280, 80))
+	g.logo.Resize(fyne.NewSize(280, 80))
+
+	g.langRadio = widget.NewRadioGroup([]string{"Português", "English"}, func(v string) {
+		if v == "English" {
+			g.setLang("en", true)
+		} else if v != "" {
+			g.setLang("pt", true)
+		}
+	})
+	g.langRadio.Horizontal = true
+
 	var configBtn *widget.Button
 	configBtn = widget.NewButton("", func() {
 		pop := widget.NewPopUpMenu(configMenu, g.win.Canvas())
@@ -201,12 +216,13 @@ func (g *gui) build() {
 		dialog.NewInformation(g.tr("about"), g.tr("aboutBody"), g.win).Show()
 	})
 
-	titleBar := container.NewHBox(
-		g.titleLabel,
-		layout.NewSpacer(),
-		g.configBtn,
-		g.aboutBtn,
+	titleBar := container.NewBorder(
+		nil, nil, nil,
+		container.NewHBox(g.configBtn, g.aboutBtn),
+		container.NewCenter(g.logo),
 	)
+
+	langBar := container.NewCenter(g.langRadio)
 
 	g.combLabel = widget.NewLabel("")
 	g.combLabel.Wrapping = fyne.TextWrapWord
@@ -236,7 +252,10 @@ func (g *gui) build() {
 		),
 	)
 
-	g.win.SetContent(container.NewBorder(titleBar, combBar, nil, nil, split))
+	g.win.SetContent(container.NewBorder(
+		container.NewVBox(titleBar, langBar),
+		combBar, nil, nil, split,
+	))
 
 	g.applyLang()
 	g.copyOnClick.Checked = g.app.Preferences().BoolWithFallback("copyOnClick", false)
@@ -299,7 +318,11 @@ func (g *gui) setLang(lang string, persist bool) {
 }
 
 func (g *gui) applyLang() {
-	g.titleLabel.SetText(g.tr("appTitle"))
+	if g.lang == "en" {
+		g.langRadio.SetSelected("English")
+	} else {
+		g.langRadio.SetSelected("Português")
+	}
 	g.search.SetPlaceHolder(g.tr("searchPlaceholder"))
 	g.configBtn.Text = g.tr("settings")
 	g.configBtn.Refresh()
