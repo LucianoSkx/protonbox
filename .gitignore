@@ -1,0 +1,17 @@
+# binários gerados
+/protonbox
+/protonbox-*
+/dist/
+
+# diretórios de build
+/AppDir
+/build/
+
+# ícones temporários
+*.AppImage
+*.deb
+*.rpm
+
+# sistema
+.DS_Store
+/appimagetool
