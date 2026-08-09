@@ -33,5 +33,5 @@ Description: Useful Proton launch commands manager
  A simple GUI to browse, copy and combine useful Proton launch
  commands (standard Proton, Proton-GE and Proton-CachyOS) for Steam.
 EOF
-dpkg-deb --build --root-owner-group "$DEB_DIR" "$DIST/${NAME}_${VERSION}_amd64.deb"
-echo "==> .deb pronto: $DIST/${NAME}_${VERSION}_amd64.deb"
+dpkg-deb --build --root-owner-group "$DEB_DIR" "$DIST/${ARTIFACT}.deb"
+echo "==> .deb pronto: $DIST/${ARTIFACT}.deb"

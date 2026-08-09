@@ -24,5 +24,5 @@ tar -C "$RPM_DIR/srctree" -czf "$RPM_DIR/SOURCES/${NAME}-${VERSION}.tar.gz" "${N
 cp packaging/protoncommand.spec "$RPM_DIR/SPECS/"
 rpmbuild --define "_topdir $(pwd)/$RPM_DIR" -bb "$RPM_DIR/SPECS/protoncommand.spec"
 mkdir -p "$DIST"
-cp "$RPM_DIR"/RPMS/x86_64/*.rpm "$DIST/"
+cp "$RPM_DIR"/RPMS/x86_64/*.rpm "$DIST/${ARTIFACT}.rpm"
 echo "==> .rpm pronto em $DIST/"

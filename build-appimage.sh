@@ -38,4 +38,4 @@ fi
 
 mkdir -p "$DIST"
 echo "==> Gerando AppImage..."
-APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" AppDir "$DIST/${NAME}-x86_64.AppImage"
+APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" AppDir "$DIST/${ARTIFACT}.AppImage"
