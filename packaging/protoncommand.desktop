@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Proton Command
+Comment=Gerencie e combine comandos úteis do Proton
+Comment[en]=Manage and combine useful Proton launch commands
+Exec=protoncommand
+Icon=protoncommand
+Terminal=false
+Categories=Game;
+StartupWMClass=ProtonCommand

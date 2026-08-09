@@ -55,7 +55,7 @@ type gui struct {
 func main() {
 	a := app.NewWithID("br.com.protoncommands")
 	a.SetIcon(resourceIcon)
-	w := a.NewWindow("ProtonBox")
+	w := a.NewWindow("Proton Command")
 	w.Resize(fyne.NewSize(980, 640))
 
 	g := &gui{app: a, win: w, all: commands(), lang: "pt", selected: map[int]bool{}}

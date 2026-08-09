@@ -1,6 +1,6 @@
 # binários gerados
-/protonbox
-/protonbox-*
+/protoncommand
+/protoncommand-*
 /dist/
 
 # diretórios de build

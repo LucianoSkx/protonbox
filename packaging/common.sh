@@ -1,9 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-NAME="protonbox"
+NAME="protoncommand"
 VERSION="0.1.0"
-DESKTOP="packaging/ProtonBox.desktop"
+DESKTOP="packaging/protoncommand.desktop"
 ICON="assets/icon.png"
 DIST="dist"
 

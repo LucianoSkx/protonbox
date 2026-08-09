@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" alt="ProtonBox" width="400">
+  <img src="assets/logo.png" alt="Proton Command" width="400">
 </div>
 
 ---
@@ -21,13 +21,13 @@ Gerencie e combine comandos úteis do Proton (Proton padrão, Proton-GE e Proton
 ## Como rodar
 
 ```bash
-./protonbox
+./protoncommand
 ```
 
 Ou compile do código-fonte:
 
 ```bash
-go build -o protonbox .
+go build -o protoncommand .
 ```
 
 ## Dependências de compilação
@@ -44,13 +44,13 @@ O binário + AppImage sempre são gerados; o `.deb` precisa de `dpkg-dev` e o `.
 
 ## Instalação
 
-Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/protonbox/releases):
+Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/protoncommand/releases):
 
 | Formato | Uso |
 |---|---|
-| **AppImage** | Qualquer distro: `chmod +x protonbox-x86_64.AppImage && ./protonbox-x86_64.AppImage` |
-| **.deb** | Debian/Ubuntu: `sudo dpkg -i protonbox_0.1.0_amd64.deb` |
-| **.rpm** | Fedora/openSUSE: `sudo rpm -i protonbox-0.1.0-1.x86_64.rpm` |
+| **AppImage** | Qualquer distro: `chmod +x protoncommand-x86_64.AppImage && ./protoncommand-x86_64.AppImage` |
+| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand_0.1.0_amd64.deb` |
+| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0-1.x86_64.rpm` |
 | **Binário** | Compile com `./build-binary.sh` |
 
 ## Compilando os pacotes
@@ -89,13 +89,13 @@ Manage and combine useful Proton launch commands (standard Proton, Proton-GE and
 ## Running
 
 ```bash
-./protonbox
+./protoncommand
 ```
 
 Or build from source:
 
 ```bash
-go build -o protonbox .
+go build -o protoncommand .
 ```
 
 ## Build dependencies
@@ -112,13 +112,13 @@ The binary + AppImage are always produced; `.deb` additionally needs `dpkg-dev` 
 
 ## Installation
 
-Pick a package from the [Releases](https://github.com/LucianoSkx/protonbox/releases) page:
+Pick a package from the [Releases](https://github.com/LucianoSkx/protoncommand/releases) page:
 
 | Format | Usage |
 |---|---|
-| **AppImage** | Any distro: `chmod +x protonbox-x86_64.AppImage && ./protonbox-x86_64.AppImage` |
-| **.deb** | Debian/Ubuntu: `sudo dpkg -i protonbox_0.1.0_amd64.deb` |
-| **.rpm** | Fedora/openSUSE: `sudo rpm -i protonbox-0.1.0-1.x86_64.rpm` |
+| **AppImage** | Any distro: `chmod +x protoncommand-x86_64.AppImage && ./protoncommand-x86_64.AppImage` |
+| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand_0.1.0_amd64.deb` |
+| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0-1.x86_64.rpm` |
 | **Binary** | Build with `./build-binary.sh` |
 
 ## Building packages

@@ -11,15 +11,15 @@ mkdir -p AppDir/usr/bin
 mkdir -p AppDir/usr/share/applications
 mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
 cp "$NAME" AppDir/usr/bin/
-cp "$DESKTOP" AppDir/ProtonBox.desktop
-cp "$DESKTOP" AppDir/usr/share/applications/ProtonBox.desktop
-cp "$ICON" AppDir/protonbox.png
-cp "$ICON" AppDir/usr/share/icons/hicolor/256x256/apps/protonbox.png
+cp "$DESKTOP" AppDir/protoncommand.desktop
+cp "$DESKTOP" AppDir/usr/share/applications/protoncommand.desktop
+cp "$ICON" AppDir/protoncommand.png
+cp "$ICON" AppDir/usr/share/icons/hicolor/256x256/apps/protoncommand.png
 cat > AppDir/AppRun <<'EOF'
 #!/bin/sh
 SELF=$(readlink -f "$0")
 HERE=${SELF%/*}
-exec "$HERE/usr/bin/protonbox" "$@"
+exec "$HERE/usr/bin/protoncommand" "$@"
 EOF
 chmod +x AppDir/AppRun
 

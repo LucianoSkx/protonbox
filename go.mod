@@ -1,4 +1,4 @@
-module proton-commands
+module protoncommand
 
 go 1.26.5
 
