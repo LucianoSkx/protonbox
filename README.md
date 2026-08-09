@@ -48,9 +48,9 @@ Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/pr
 
 | Formato | Uso |
 |---|---|
-| **AppImage** | Qualquer distro: `chmod +x protoncommand-0.1.0-1.x86_64.AppImage && ./protoncommand-0.1.0-1.x86_64.AppImage` |
-| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand-0.1.0-1.x86_64.deb` |
-| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0-1.x86_64.rpm` |
+| **AppImage** | Qualquer distro: `chmod +x protoncommand-0.1.0.x86_64.AppImage && ./protoncommand-0.1.0.x86_64.AppImage` |
+| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand-0.1.0.x86_64.deb` |
+| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0.x86_64.rpm` |
 | **Binário** | Compile com `./build-binary.sh` |
 
 ## Compilando os pacotes
@@ -116,9 +116,9 @@ Pick a package from the [Releases](https://github.com/LucianoSkx/protoncommand/r
 
 | Format | Usage |
 |---|---|
-| **AppImage** | Any distro: `chmod +x protoncommand-0.1.0-1.x86_64.AppImage && ./protoncommand-0.1.0-1.x86_64.AppImage` |
-| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand-0.1.0-1.x86_64.deb` |
-| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0-1.x86_64.rpm` |
+| **AppImage** | Any distro: `chmod +x protoncommand-0.1.0.x86_64.AppImage && ./protoncommand-0.1.0.x86_64.AppImage` |
+| **.deb** | Debian/Ubuntu: `sudo dpkg -i protoncommand-0.1.0.x86_64.deb` |
+| **.rpm** | Fedora/openSUSE: `sudo rpm -i protoncommand-0.1.0.x86_64.rpm` |
 | **Binary** | Build with `./build-binary.sh` |
 
 ## Building packages

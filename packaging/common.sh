@@ -6,7 +6,7 @@ VERSION="0.1.0"
 DESKTOP="packaging/protoncommand.desktop"
 ICON="assets/icon.png"
 DIST="dist"
-ARTIFACT="${NAME}-${VERSION}-1.x86_64"
+ARTIFACT="${NAME}-${VERSION}.x86_64"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
