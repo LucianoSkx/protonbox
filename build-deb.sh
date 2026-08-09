@@ -1,6 +1,7 @@
 #!/bin/bash
+cd "$(dirname "$0")" || exit 1
 set -euo pipefail
-source "$(dirname "$0")/packaging/common.sh"
+source packaging/common.sh
 
 build_binary
 
