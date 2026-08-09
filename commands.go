@@ -874,6 +874,26 @@ func commands() []Command {
 			},
 		},
 		{
+			Command:   "WINEDLLOVERRIDES=\"OnlineFix64=n;SteamOverlay64=n;winmm=n,b;dnet=n;steam_api64=n;winhttp=n,b\" %command%",
+			CommandEN: "WINEDLLOVERRIDES=\"OnlineFix64=n;SteamOverlay64=n;winmm=n,b;dnet=n;steam_api64=n;winhttp=n,b\" %command%",
+			Title: Localized{
+				PT: "Online-Fix (crack online)",
+				EN: "Online-Fix (online crack)",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Proton (GE recomendado)",
+				EN: "Proton (GE recommended)",
+			},
+			Description: Localized{
+				PT: "Para jogos com o Online-Fix (modo multiplayer online) da Online-Fix.me. Sobrescreve as DLLs para usar as do crack (OnlineFix64, SteamOverlay64, steam_api64) mantendo winmm/winhttp como builtin. Adicione o executável do jogo ao Steam com Proton; se faltar alguma DLL, adicione-a ao overrides com \"n\".",
+				EN: "For Online-Fix (online multiplayer) cracked games from Online-Fix.me. Overrides DLLs to use the crack's (OnlineFix64, SteamOverlay64, steam_api64) while keeping winmm/winhttp as builtin. Add the game's executable to Steam with Proton; if a DLL is missing, add it to the overrides with \"n\".",
+			},
+		},
+		{
 			Command:   "PROTON_WAIT_ATTACH=1 %command%",
 			CommandEN: "PROTON_WAIT_ATTACH=1 %command%",
 			Title: Localized{
