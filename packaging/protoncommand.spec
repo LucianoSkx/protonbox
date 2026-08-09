@@ -19,6 +19,7 @@ commands (standard Proton, Proton-GE and Proton-CachyOS) for Steam.
 %install
 mkdir -p %{buildroot}%{_bindir}
 install -m755 protoncommand %{buildroot}%{_bindir}/protoncommand
+install -m644 FyneApp.toml %{buildroot}%{_bindir}/FyneApp.toml
 mkdir -p %{buildroot}%{_datadir}/applications
 install -m644 protoncommand.desktop %{buildroot}%{_datadir}/applications/protoncommand.desktop
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
@@ -26,5 +27,6 @@ install -m644 icon.png %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/proton
 
 %files
 %{_bindir}/protoncommand
+%{_bindir}/FyneApp.toml
 %{_datadir}/applications/protoncommand.desktop
 %{_datadir}/icons/hicolor/256x256/apps/protoncommand.png

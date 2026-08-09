@@ -17,6 +17,7 @@ rm -rf "$RPM_DIR"
 mkdir -p "$RPM_DIR"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 mkdir -p "$SRCTREE"
 cp "$NAME" "$SRCTREE/"
+cp FyneApp.toml "$SRCTREE/FyneApp.toml"
 cp "$DESKTOP" "$SRCTREE/protoncommand.desktop"
 cp "$ICON" "$SRCTREE/icon.png"
 tar -C "$RPM_DIR/srctree" -czf "$RPM_DIR/SOURCES/${NAME}-${VERSION}.tar.gz" "${NAME}-${VERSION}"

@@ -11,6 +11,7 @@ mkdir -p AppDir/usr/bin
 mkdir -p AppDir/usr/share/applications
 mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
 cp "$NAME" AppDir/usr/bin/
+cp FyneApp.toml AppDir/usr/bin/FyneApp.toml
 cp "$DESKTOP" AppDir/protoncommand.desktop
 cp "$DESKTOP" AppDir/usr/share/applications/protoncommand.desktop
 cp "$ICON" AppDir/protoncommand.png

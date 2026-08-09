@@ -18,6 +18,7 @@ mkdir -p "$DEB_DIR/usr/bin"
 mkdir -p "$DEB_DIR/usr/share/applications"
 mkdir -p "$DEB_DIR/usr/share/icons/hicolor/256x256/apps"
 cp "$NAME" "$DEB_DIR/usr/bin/"
+cp FyneApp.toml "$DEB_DIR/usr/bin/FyneApp.toml"
 cp "$DESKTOP" "$DEB_DIR/usr/share/applications/"
 cp "$ICON" "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/$NAME.png"
 cat > "$DEB_DIR/DEBIAN/control" <<EOF
