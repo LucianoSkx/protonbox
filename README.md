@@ -40,7 +40,7 @@ Precisa de Go + `gcc` + bibliotecas do GLFW:
 | **Debian / Ubuntu** | `sudo apt install golang gcc libgl1-mesa-dev xorg-dev libwayland-dev` |
 | **Fedora** | `sudo dnf install golang gcc mesa-libGL-devel libX11-devel libwayland-devel libXcursor-devel libXrandr-devel libXi-devel` |
 
-O `build.sh` gera binário + AppImage sempre; o `.deb` precisa de `dpkg-dev` e o `.rpm` de `rpm-build` (ele pula o que não estiver instalado, sem falhar).
+O binário + AppImage sempre são gerados; o `.deb` precisa de `dpkg-dev` e o `.rpm` de `rpm-build`.
 
 ## Instalação
 
@@ -51,7 +51,7 @@ Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/pr
 | **AppImage** | Qualquer distro: `chmod +x protonbox-x86_64.AppImage && ./protonbox-x86_64.AppImage` |
 | **.deb** | Debian/Ubuntu: `sudo dpkg -i protonbox_0.1.0_amd64.deb` |
 | **.rpm** | Fedora/openSUSE: `sudo rpm -i protonbox-0.1.0-1.x86_64.rpm` |
-| **Binário** | Compile com `./build.sh` |
+| **Binário** | Compile com `./build-binary.sh` |
 
 ## Compilando os pacotes
 
@@ -62,10 +62,9 @@ Builds separados por formato:
 ./build-appimage.sh   # AppImage (qualquer distro)
 ./build-deb.sh        # .deb (precisa dpkg-dev)
 ./build-rpm.sh        # .rpm (precisa rpm-build)
-./build.sh            # todos de uma vez (pula o que faltar)
 ```
 
-Artefatos em `dist/`. O `build.sh` chama os quatro — se alguma ferramenta faltar, ele avisa e continua com os demais.
+Artefatos em `dist/`. Rode o script do formato desejado — cada um compila o binário e gera seu pacote.
 
 ## Licença
 
@@ -109,7 +108,7 @@ You need Go + `gcc` + the GLFW libraries:
 | **Debian / Ubuntu** | `sudo apt install golang gcc libgl1-mesa-dev xorg-dev libwayland-dev` |
 | **Fedora** | `sudo dnf install golang gcc mesa-libGL-devel libX11-devel libwayland-devel libXcursor-devel libXrandr-devel libXi-devel` |
 
-`build.sh` always produces the binary + AppImage; `.deb` additionally needs `dpkg-dev` and `.rpm` needs `rpm-build` (missing tools are skipped gracefully).
+The binary + AppImage are always produced; `.deb` additionally needs `dpkg-dev` and `.rpm` needs `rpm-build`.
 
 ## Installation
 
@@ -120,7 +119,7 @@ Pick a package from the [Releases](https://github.com/LucianoSkx/protonbox/relea
 | **AppImage** | Any distro: `chmod +x protonbox-x86_64.AppImage && ./protonbox-x86_64.AppImage` |
 | **.deb** | Debian/Ubuntu: `sudo dpkg -i protonbox_0.1.0_amd64.deb` |
 | **.rpm** | Fedora/openSUSE: `sudo rpm -i protonbox-0.1.0-1.x86_64.rpm` |
-| **Binary** | Build with `./build.sh` |
+| **Binary** | Build with `./build-binary.sh` |
 
 ## Building packages
 
@@ -131,8 +130,9 @@ Separate scripts per format:
 ./build-appimage.sh   # AppImage (any distro)
 ./build-deb.sh        # .deb (needs dpkg-dev)
 ./build-rpm.sh        # .rpm (needs rpm-build)
-./build.sh            # everything at once (skips what's missing)
 ```
+
+Artifacts land in `dist/`. Run the script of the format you want — each one compiles the binary and builds its package.
 
 Artifacts land in `dist/`. `build.sh` runs all four — if a tool is missing it warns and continues with the rest.
 
