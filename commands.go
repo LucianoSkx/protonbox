@@ -873,5 +873,265 @@ func commands() []Command {
 				EN: "Enables the lsfg-vk frame generation layer using the \"steam\" profile. Create the profile and tune multiplier, performance mode, HDR etc. in the lsfg-vk GUI (lsfg-vk-ui command). Requires lsfg-vk installed and Lossless Scaling on Steam.",
 			},
 		},
+		{
+			Command:   "PROTON_WAIT_ATTACH=1 %command%",
+			CommandEN: "PROTON_WAIT_ATTACH=1 %command%",
+			Title: Localized{
+				PT: "Esperar depurador anexar",
+				EN: "Wait for debugger attach",
+			},
+			Category: Localized{
+				PT: "Diagnóstico",
+				EN: "Diagnostics",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Espera um depurador anexar ao steam.exe antes de iniciar o processo do jogo. Para anexar ao jogo no início, configure o depurador para seguir processos filhos.",
+				EN: "Waits for a debugger to attach to steam.exe before launching the game process. To attach to the game at startup, set debuggers to follow child processes.",
+			},
+		},
+		{
+			Command:   "PROTON_DXVK_D3D8=1 %command%",
+			CommandEN: "PROTON_DXVK_D3D8=1 %command%",
+			Title: Localized{
+				PT: "D3D8 via DXVK",
+				EN: "D3D8 via DXVK",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Usa o d3d8.dll do DXVK em vez do d3d8 do Wine para jogos Direct3D 8.",
+				EN: "Use DXVK's d3d8.dll instead of Wine's d3d8 for Direct3D 8 games.",
+			},
+		},
+		{
+			Command:   "PROTON_NO_NTSYNC=1 %command%",
+			CommandEN: "PROTON_NO_NTSYNC=1 %command%",
+			Title: Localized{
+				PT: "Desativar ntsync",
+				EN: "Disable ntsync",
+			},
+			Category: Localized{
+				PT: "Sincronização",
+				EN: "Synchronization",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Desativa o ntsync (sincronização no estilo Windows NT). Use se algum jogo apresentar problema com o ntsync ativo.",
+				EN: "Disables ntsync (Windows NT style synchronization). Use it if a game misbehaves with ntsync enabled.",
+			},
+		},
+		{
+			Command:   "PROTON_FORCE_LARGE_ADDRESS_AWARE=1 %command%",
+			CommandEN: "PROTON_FORCE_LARGE_ADDRESS_AWARE=1 %command%",
+			Title: Localized{
+				PT: "Forçar LARGE_ADDRESS_AWARE",
+				EN: "Force LARGE_ADDRESS_AWARE",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Força a flag LARGE_ADDRESS_AWARE em todos os executáveis, permitindo usar mais de 2 GB de RAM (já habilitado por padrão no Proton).",
+				EN: "Forces the LARGE_ADDRESS_AWARE flag on all executables, allowing more than 2 GB of RAM (enabled by default in Proton).",
+			},
+		},
+		{
+			Command:   "PROTON_HEAP_DELAY_FREE=1 %command%",
+			CommandEN: "PROTON_HEAP_DELAY_FREE=1 %command%",
+			Title: Localized{
+				PT: "Atrasar liberação de memória",
+				EN: "Delay memory freeing",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Atrasa a liberação de parte da memória para contornar bugs de use-after-free em alguns jogos.",
+				EN: "Delays freeing some memory to work around use-after-free bugs in some games.",
+			},
+		},
+		{
+			Command:   "PROTON_SET_GAME_DRIVE=1 %command%",
+			CommandEN: "PROTON_SET_GAME_DRIVE=1 %command%",
+			Title: Localized{
+				PT: "Unidade S: do jogo",
+				EN: "Game S: drive",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Cria uma unidade S: apontando para a biblioteca Steam que contém o jogo. Útil para jogos que procuram arquivos em caminhos fixos.",
+				EN: "Creates an S: drive pointing to the Steam Library which contains the game. Useful for games that look for files in fixed paths.",
+			},
+		},
+		{
+			Command:   "PROTON_OLD_GL_STRING=1 %command%",
+			CommandEN: "PROTON_OLD_GL_STRING=1 %command%",
+			Title: Localized{
+				PT: "String GL limitada",
+				EN: "Limit GL extension string",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Aplica overrides no driver para limitar o tamanho da string de extensões GL, para jogos antigos que travam com strings muito longas.",
+				EN: "Sets driver overrides to limit the length of the GL extension string, for old games that crash on very long extension strings.",
+			},
+		},
+		{
+			Command:   "WINE_DO_NOT_CREATE_DXGI_DEVICE_MANAGER=1 %command%",
+			CommandEN: "WINE_DO_NOT_CREATE_DXGI_DEVICE_MANAGER=1 %command%",
+			Title: Localized{
+				PT: "Sem DXGI device manager",
+				EN: "Skip DXGI device manager",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Hack para contornar problemas de vídeo em alguns jogos causados por suporte incompleto a IMFDXGIDeviceManager.",
+				EN: "Hack to work around video issues in some games due to incomplete IMFDXGIDeviceManager support.",
+			},
+		},
+		{
+			Command:   "WINE_DISABLE_VULKAN_OPWR=1 %command%",
+			CommandEN: "WINE_DISABLE_VULKAN_OPWR=1 %command%",
+			Title: Localized{
+				PT: "Sem Vulkan OPWR",
+				EN: "Disable Vulkan OPWR",
+			},
+			Category: Localized{
+				PT: "Wayland",
+				EN: "Wayland",
+			},
+			Compat: Localized{
+				PT: "Wayland",
+				EN: "Wayland",
+			},
+			Description: Localized{
+				PT: "Desativa o render de janelas de outros processos via Vulkan (other process window rendering), que às vezes causa atraso de um frame no Wayland.",
+				EN: "Disables Vulkan other process window rendering, which sometimes causes issues on Wayland due to blit being one frame behind.",
+			},
+		},
+		{
+			Command:   "PROTON_HIDE_NVIDIA_GPU=1 %command%",
+			CommandEN: "PROTON_HIDE_NVIDIA_GPU=1 %command%",
+			Title: Localized{
+				PT: "Ocultar GPU NVIDIA",
+				EN: "Hide NVIDIA GPU",
+			},
+			Category: Localized{
+				PT: "GPU",
+				EN: "GPU",
+			},
+			Compat: Localized{
+				PT: "NVIDIA",
+				EN: "NVIDIA",
+			},
+			Description: Localized{
+				PT: "Faz a GPU NVIDIA ser sempre reportada como AMD. Alguns jogos exigem isso quando dependem de funcionalidade do driver NVIDIA que só existe no Windows.",
+				EN: "Forces NVIDIA GPUs to always be reported as AMD GPUs. Some games require this if they depend on Windows-only NVIDIA driver functionality.",
+			},
+		},
+		{
+			Command:   "WINE_USE_KWIN_HACKS=1 %command%",
+			CommandEN: "WINE_USE_KWIN_HACKS=1 %command%",
+			Title: Localized{
+				PT: "Hacks para KDE",
+				EN: "KDE windowing hacks",
+			},
+			Category: Localized{
+				PT: "Wayland",
+				EN: "Wayland",
+			},
+			Compat: Localized{
+				PT: "KDE (Wayland/X11)",
+				EN: "KDE (Wayland/X11)",
+			},
+			Description: Localized{
+				PT: "Ativa hacks específicos do KDE que melhoram a experiência com KDE mais antigo que 6.4 no Wayland e 6.6 no X11.",
+				EN: "Enables KDE-specific windowing hacks that may improve experience with KDE older than 6.4 on Wayland and 6.6 on X11.",
+			},
+		},
+		{
+			Command:   "PROTON_USE_XALIA=1 %command%",
+			CommandEN: "PROTON_USE_XALIA=1 %command%",
+			Title: Localized{
+				PT: "Xalia (UI de gamepad)",
+				EN: "Xalia (gamepad UI)",
+			},
+			Category: Localized{
+				PT: "Input",
+				EN: "Input",
+			},
+			Compat: Localized{
+				PT: "Proton padrão, GE e CachyOS",
+				EN: "Standard Proton, GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Ativa o Xalia, que adiciona UI de gamepad para algumas interfaces de teclado/mouse. Por padrão o Proton decide dinamicamente; use 0 para desativar.",
+				EN: "Enables Xalia, which adds a gamepad UI for some keyboard/mouse interfaces. The default is dynamic; set to 0 to disable.",
+			},
+		},
+		{
+			Command:   "FNA3D_FORCE_DRIVER=D3D11 %command%",
+			CommandEN: "FNA3D_FORCE_DRIVER=D3D11 %command%",
+			Title: Localized{
+				PT: "FNA: forçar D3D11",
+				EN: "FNA: force D3D11",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "Jogos FNA/XNA (ex.: Celeste)",
+				EN: "FNA/XNA games (e.g. Celeste)",
+			},
+			Description: Localized{
+				PT: "Força o FNA (framework de jogos estilo XNA) a usar D3D11 para renderização.",
+				EN: "Forces FNA (XNA-style game framework) to use D3D11 for rendering.",
+			},
+		},
 	}
 }
