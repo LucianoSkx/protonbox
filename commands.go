@@ -853,5 +853,25 @@ func commands() []Command {
 				EN: "Enables rpc-bridge, letting games running in Proton show Rich Presence (\"playing X\") on Discord.",
 			},
 		},
+		{
+			Command:   "LSFG_PROCESS=steam %command%",
+			CommandEN: "LSFG_PROCESS=steam %command%",
+			Title: Localized{
+				PT: "lsfg-vk: frame generation",
+				EN: "lsfg-vk: frame generation",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "Vulkan (Proton/GE)",
+				EN: "Vulkan (Proton/GE)",
+			},
+			Description: Localized{
+				PT: "Ativa a layer de frame generation do lsfg-vk usando o profile \"steam\". Crie o profile e ajuste multiplicador, modo de desempenho, HDR etc. na interface gráfica do lsfg-vk (comando lsfg-vk-ui). Requer lsfg-vk instalado e Lossless Scaling na Steam.",
+				EN: "Enables the lsfg-vk frame generation layer using the \"steam\" profile. Create the profile and tune multiplier, performance mode, HDR etc. in the lsfg-vk GUI (lsfg-vk-ui command). Requires lsfg-vk installed and Lossless Scaling on Steam.",
+			},
+		},
 	}
 }
