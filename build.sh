@@ -21,6 +21,13 @@ cp "$DESKTOP" AppDir/ProtonBox.desktop
 cp "$DESKTOP" AppDir/usr/share/applications/ProtonBox.desktop
 cp "$ICON" AppDir/protonbox.png
 cp "$ICON" AppDir/usr/share/icons/hicolor/256x256/apps/protonbox.png
+cat > AppDir/AppRun <<'EOF'
+#!/bin/sh
+SELF=$(readlink -f "$0")
+HERE=${SELF%/*}
+exec "$HERE/usr/bin/protonbox" "$@"
+EOF
+chmod +x AppDir/AppRun
 cp "$ICON" AppDir/usr/share/icons/hicolor/256x256/apps/"$NAME".png
 
 if command -v appimagetool >/dev/null 2>&1; then
