@@ -46,15 +46,16 @@ echo "==> Gerando AppImage..."
 APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" AppDir "$DIST/${NAME}-x86_64.AppImage"
 
 echo "==> Gerando .deb..."
-DEB_DIR="$DIST/deb"
-mkdir -p "$DEB_DIR/DEBIAN"
-mkdir -p "$DEB_DIR/usr/bin"
-mkdir -p "$DEB_DIR/usr/share/applications"
-mkdir -p "$DEB_DIR/usr/share/icons/hicolor/256x256/apps"
-cp "$NAME" "$DEB_DIR/usr/bin/"
-cp "$DESKTOP" "$DEB_DIR/usr/share/applications/"
-cp "$ICON" "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/$NAME.png"
-cat > "$DEB_DIR/DEBIAN/control" <<EOF
+if command -v dpkg-deb >/dev/null 2>&1; then
+  DEB_DIR="$DIST/deb"
+  mkdir -p "$DEB_DIR/DEBIAN"
+  mkdir -p "$DEB_DIR/usr/bin"
+  mkdir -p "$DEB_DIR/usr/share/applications"
+  mkdir -p "$DEB_DIR/usr/share/icons/hicolor/256x256/apps"
+  cp "$NAME" "$DEB_DIR/usr/bin/"
+  cp "$DESKTOP" "$DEB_DIR/usr/share/applications/"
+  cp "$ICON" "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/$NAME.png"
+  cat > "$DEB_DIR/DEBIAN/control" <<EOF
 Package: $NAME
 Version: $VERSION
 Section: games
@@ -66,21 +67,28 @@ Description: Useful Proton launch commands manager
  A simple GUI to browse, copy and combine useful Proton launch
  commands (standard Proton, Proton-GE and Proton-CachyOS) for Steam.
 EOF
-dpkg-deb --build --root-owner-group "$DEB_DIR" "$DIST/${NAME}_${VERSION}_amd64.deb"
+  dpkg-deb --build --root-owner-group "$DEB_DIR" "$DIST/${NAME}_${VERSION}_amd64.deb"
+else
+  echo "dpkg-deb não encontrado (ex.: sudo apt install dpkg-dev) — pulando .deb"
+fi
 
 echo "==> Gerando .rpm..."
-RPM_DIR="build/rpm"
-mkdir -p "$RPM_DIR"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-SRCTREE="$RPM_DIR/srctree/${NAME}-${VERSION}"
-rm -rf "$RPM_DIR/srctree"
-mkdir -p "$SRCTREE"
-cp "$NAME" "$SRCTREE/"
-cp "$DESKTOP" "$SRCTREE/ProtonBox.desktop"
-cp "$ICON" "$SRCTREE/icon.png"
-tar -C "$RPM_DIR/srctree" -czf "$RPM_DIR/SOURCES/${NAME}-${VERSION}.tar.gz" "${NAME}-${VERSION}"
-cp packaging/protonbox.spec "$RPM_DIR/SPECS/"
-rpmbuild --define "_topdir $(pwd)/$RPM_DIR" -bb "$RPM_DIR/SPECS/protonbox.spec"
-cp "$RPM_DIR"/RPMS/x86_64/*.rpm "$DIST/"
+if command -v rpmbuild >/dev/null 2>&1; then
+  RPM_DIR="build/rpm"
+  mkdir -p "$RPM_DIR"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+  SRCTREE="$RPM_DIR/srctree/${NAME}-${VERSION}"
+  rm -rf "$RPM_DIR/srctree"
+  mkdir -p "$SRCTREE"
+  cp "$NAME" "$SRCTREE/"
+  cp "$DESKTOP" "$SRCTREE/ProtonBox.desktop"
+  cp "$ICON" "$SRCTREE/icon.png"
+  tar -C "$RPM_DIR/srctree" -czf "$RPM_DIR/SOURCES/${NAME}-${VERSION}.tar.gz" "${NAME}-${VERSION}"
+  cp packaging/protonbox.spec "$RPM_DIR/SPECS/"
+  rpmbuild --define "_topdir $(pwd)/$RPM_DIR" -bb "$RPM_DIR/SPECS/protonbox.spec"
+  cp "$RPM_DIR"/RPMS/x86_64/*.rpm "$DIST/"
+else
+  echo "rpmbuild não encontrado (ex.: sudo dnf install rpm-build) — pulando .rpm"
+fi
 
 echo ""
 echo "==> Artefatos em $DIST/:"

@@ -30,6 +30,18 @@ Ou compile do código-fonte:
 go build -o protonbox .
 ```
 
+## Dependências de compilação
+
+Precisa de Go + `gcc` + bibliotecas do GLFW:
+
+| Distro | Instalar |
+|---|---|
+| **Arch / CachyOS** | `sudo pacman -S base-devel go` |
+| **Debian / Ubuntu** | `sudo apt install golang gcc libgl1-mesa-dev xorg-dev libwayland-dev` |
+| **Fedora** | `sudo dnf install golang gcc mesa-libGL-devel libX11-devel libwayland-devel libXcursor-devel libXrandr-devel libXi-devel` |
+
+O `build.sh` gera binário + AppImage sempre; o `.deb` precisa de `dpkg-dev` e o `.rpm` de `rpm-build` (ele pula o que não estiver instalado, sem falhar).
+
 ## Instalação
 
 Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/protonbox/releases):
@@ -80,6 +92,18 @@ Or build from source:
 ```bash
 go build -o protonbox .
 ```
+
+## Build dependencies
+
+You need Go + `gcc` + the GLFW libraries:
+
+| Distro | Install |
+|---|---|
+| **Arch / CachyOS** | `sudo pacman -S base-devel go` |
+| **Debian / Ubuntu** | `sudo apt install golang gcc libgl1-mesa-dev xorg-dev libwayland-dev` |
+| **Fedora** | `sudo dnf install golang gcc mesa-libGL-devel libX11-devel libwayland-devel libXcursor-devel libXrandr-devel libXi-devel` |
+
+`build.sh` always produces the binary + AppImage; `.deb` additionally needs `dpkg-dev` and `.rpm` needs `rpm-build` (missing tools are skipped gracefully).
 
 ## Installation
 
