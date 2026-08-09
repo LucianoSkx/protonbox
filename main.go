@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -430,7 +431,7 @@ func (g *gui) updateCombination() {
 		return
 	}
 	g.combLabel.SetText(comb)
-	g.combCount.SetText(g.tr("selectedCount"))
+	g.combCount.SetText(g.tr("selectedCount") + strconv.Itoa(n))
 	g.combCopyBtn.Enable()
 }
 

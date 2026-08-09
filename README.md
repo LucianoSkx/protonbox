@@ -10,7 +10,7 @@ Gerencie e combine comandos úteis do Proton (Proton padrão, Proton-GE e Proton
 
 ## Funcionalidades
 
-- **44+ comandos** com descrição em Português e English
+- **58 comandos** com descrição em Português e English
 - **Combinação múltipla**: marque vários comandos e gere uma única linha pronta, por exemplo:
   `mangohud gamemoderun PROTON_LOG=1 %command%`
 - Busca por comando, título, categoria e compatibilidade
@@ -78,7 +78,7 @@ Manage and combine useful Proton launch commands (standard Proton, Proton-GE and
 
 ## Features
 
-- **44+ commands** with descriptions in English and Portuguese
+- **58 commands** with descriptions in English and Portuguese
 - **Multiple combination**: check several commands and generate a single ready-to-paste line, e.g.:
   `mangohud gamemoderun PROTON_LOG=1 %command%`
 - Search by command, title, category and compatibility
