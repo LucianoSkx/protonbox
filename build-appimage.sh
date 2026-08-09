@@ -1,0 +1,39 @@
+#!/bin/bash
+set -euo pipefail
+source "$(dirname "$0")/packaging/common.sh"
+
+build_binary
+
+echo "==> Montando AppDir (AppImage)..."
+rm -rf AppDir
+mkdir -p AppDir/usr/bin
+mkdir -p AppDir/usr/share/applications
+mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
+cp "$NAME" AppDir/usr/bin/
+cp "$DESKTOP" AppDir/ProtonBox.desktop
+cp "$DESKTOP" AppDir/usr/share/applications/ProtonBox.desktop
+cp "$ICON" AppDir/protonbox.png
+cp "$ICON" AppDir/usr/share/icons/hicolor/256x256/apps/protonbox.png
+cat > AppDir/AppRun <<'EOF'
+#!/bin/sh
+SELF=$(readlink -f "$0")
+HERE=${SELF%/*}
+exec "$HERE/usr/bin/protonbox" "$@"
+EOF
+chmod +x AppDir/AppRun
+
+if command -v appimagetool >/dev/null 2>&1; then
+  TOOL="appimagetool"
+elif [ -x ./appimagetool ]; then
+  TOOL="./appimagetool"
+else
+  echo "appimagetool não encontrado. Baixando..."
+  curl -L -o appimagetool \
+    https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+  chmod +x appimagetool
+  TOOL="./appimagetool"
+fi
+
+mkdir -p "$DIST"
+echo "==> Gerando AppImage..."
+APPIMAGE_EXTRACT_AND_RUN=1 "$TOOL" AppDir "$DIST/${NAME}-x86_64.AppImage"

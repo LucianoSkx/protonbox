@@ -55,11 +55,17 @@ Escolha um dos pacotes na página de [Releases](https://github.com/LucianoSkx/pr
 
 ## Compilando os pacotes
 
+Builds separados por formato:
+
 ```bash
-./build.sh
+./build-binary.sh     # binário
+./build-appimage.sh   # AppImage (qualquer distro)
+./build-deb.sh        # .deb (precisa dpkg-dev)
+./build-rpm.sh        # .rpm (precisa rpm-build)
+./build.sh            # todos de uma vez (pula o que faltar)
 ```
 
-Gera `protonbox` (binário), `ProtonBox-x86_64.AppImage`, `protonbox_0.1.0_amd64.deb` e `protonbox-0.1.0-1.x86_64.rpm` na pasta `dist/`.
+Artefatos em `dist/`. O `build.sh` chama os quatro — se alguma ferramenta faltar, ele avisa e continua com os demais.
 
 ## Licença
 
@@ -118,11 +124,17 @@ Pick a package from the [Releases](https://github.com/LucianoSkx/protonbox/relea
 
 ## Building packages
 
+Separate scripts per format:
+
 ```bash
-./build.sh
+./build-binary.sh     # binary
+./build-appimage.sh   # AppImage (any distro)
+./build-deb.sh        # .deb (needs dpkg-dev)
+./build-rpm.sh        # .rpm (needs rpm-build)
+./build.sh            # everything at once (skips what's missing)
 ```
 
-Produces `protonbox` (binary), `ProtonBox-x86_64.AppImage`, `protonbox_0.1.0_amd64.deb` and `protonbox-0.1.0-1.x86_64.rpm` in the `dist/` folder.
+Artifacts land in `dist/`. `build.sh` runs all four — if a tool is missing it warns and continues with the rest.
 
 ## License
 
