@@ -10,10 +10,13 @@ Gerencie e combine comandos úteis do Proton (Proton padrão, Proton-GE e Proton
 
 ## Funcionalidades
 
-- **58 comandos** com descrição em Português e English
+- **73 comandos** com descrição em Português e English
 - **Combinação múltipla**: marque vários comandos e gere uma única linha pronta, por exemplo:
   `mangohud gamemoderun PROTON_LOG=1 %command%`
-- Busca por comando, título, categoria e compatibilidade
+- **Seletor de launcher**: Steam, Faugus Launcher, Heroic, Lutris e Bottles — a linha gerada se adapta (Steam/Faugus usam `%command%`; os demais só variáveis de ambiente)
+- **Avisos de conflito**: detecta variáveis definidas mais de uma vez com valores diferentes e opções mutuamente exclusivas (ex.: Anti-Lag 2 vs Reflex)
+- **Favoritos**: marque comandos com estrela e filtre só os favoritos
+- Filtro por categoria, busca por comando, título, categoria e compatibilidade
 - Tema claro / escuro / sistema
 - Opção "copiar ao clicar"
 - Seletor de idioma (PT/EN) no topo
@@ -78,10 +81,13 @@ Manage and combine useful Proton launch commands (standard Proton, Proton-GE and
 
 ## Features
 
-- **58 commands** with descriptions in English and Portuguese
+- **73 commands** with descriptions in English and Portuguese
 - **Multiple combination**: check several commands and generate a single ready-to-paste line, e.g.:
   `mangohud gamemoderun PROTON_LOG=1 %command%`
-- Search by command, title, category and compatibility
+- **Launcher selector**: Steam, Faugus Launcher, Heroic, Lutris and Bottles — the generated line adapts (Steam/Faugus use `%command%`; the rest get environment variables only)
+- **Conflict warnings**: detects variables set more than once with different values and mutually exclusive options (e.g.: Anti-Lag 2 vs Reflex)
+- **Favorites**: star commands and filter favorites only
+- Category filter, search by command, title, category and compatibility
 - Light / dark / system theme
 - Optional "copy on click"
 - Language selector (PT/EN) at the top

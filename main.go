@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -31,6 +33,7 @@ type gui struct {
 	detailDesc   *widget.Label
 	detailCmd    *widget.Label
 	copyBtn      *widget.Button
+	favToggleBtn *widget.Button
 	status       *widget.Label
 
 	langHeader  *fyne.MenuItem
@@ -45,10 +48,22 @@ type gui struct {
 	combCount   *widget.Label
 	combCopyBtn *widget.Button
 	clearBtn    *widget.Button
+	combWarn    *canvas.Text
+	combHint    *widget.Label
+
+	launcherSel *widget.Select
+	launchers   []Launcher
+	launcher    *Launcher
+	catSel      *widget.Select
+	catOptions  []string
+	catFilterPT string
+	favBtn      *widget.Button
+	favOnly     bool
 
 	all      []Command
 	filtered []int
 	selected map[int]bool
+	favs     map[int]bool
 	current  int
 	selID    int
 }
@@ -59,9 +74,30 @@ func main() {
 	w := a.NewWindow("Proton Command")
 	w.Resize(fyne.NewSize(980, 640))
 
-	g := &gui{app: a, win: w, all: commands(), lang: "pt", selected: map[int]bool{}}
+	g := &gui{
+		app:      a,
+		win:      w,
+		all:      commands(),
+		lang:     "pt",
+		selected: map[int]bool{},
+		favs:     map[int]bool{},
+	}
+	g.launchers = launchers()
+	g.launcher = &g.launchers[0]
 	if l := a.Preferences().StringWithFallback("lang", "pt"); l == "en" || l == "pt" {
 		g.lang = l
+	}
+	if id := a.Preferences().StringWithFallback("launcher", "steam"); id != "" {
+		for i := range g.launchers {
+			if g.launchers[i].ID == id {
+				g.launcher = &g.launchers[i]
+			}
+		}
+	}
+	for _, s := range a.Preferences().StringListWithFallback("favs", nil) {
+		if i, err := strconv.Atoi(s); err == nil && i >= 0 && i < len(g.all) {
+			g.favs[i] = true
+		}
 	}
 	g.filtered = make([]int, len(g.all))
 	for i := range g.all {
@@ -97,6 +133,25 @@ func (g *gui) cmd(c Command) string {
 func (g *gui) build() {
 	g.search = widget.NewEntry()
 	g.search.OnChanged = func(_ string) { g.applyFilter() }
+
+	g.catSel = widget.NewSelect(nil, func(v string) {
+		g.catFilterPT = ""
+		for _, c := range g.all {
+			if g.t(c.Category) == v {
+				g.catFilterPT = c.Category.PT
+				break
+			}
+		}
+		g.applyFilter()
+	})
+
+	g.favBtn = widget.NewButton("", func() {
+		g.favOnly = !g.favOnly
+		g.applyFavButton()
+		g.applyFilter()
+	})
+
+	filterRow := container.NewBorder(nil, nil, g.catSel, g.favBtn)
 
 	g.list = widget.NewList(
 		func() int { return len(g.filtered) },
@@ -163,6 +218,13 @@ func (g *gui) build() {
 	})
 	g.copyBtn.Importance = widget.HighImportance
 
+	g.favToggleBtn = widget.NewButton("", func() {
+		if g.current < 0 {
+			return
+		}
+		g.toggleFav(g.current)
+	})
+
 	g.status = widget.NewLabel("")
 	g.status.TextStyle = fyne.TextStyle{Italic: true}
 
@@ -175,14 +237,18 @@ func (g *gui) build() {
 			g.detailCmd,
 			widget.NewSeparator(),
 		),
-		container.NewVBox(g.copyBtn, g.status),
+		container.NewVBox(
+			container.NewHBox(g.copyBtn, g.favToggleBtn),
+			g.status,
+		),
 		nil, nil,
 		container.NewVScroll(g.detailDesc),
 	)
 	detail.Resize(fyne.NewSize(520, 560))
 
 	left := container.NewBorder(
-		g.search, nil, nil, nil,
+		container.NewVBox(g.search, filterRow),
+		nil, nil, nil,
 		g.list,
 	)
 
@@ -223,13 +289,33 @@ func (g *gui) build() {
 		container.NewCenter(g.logo),
 	)
 
-	langBar := container.NewCenter(g.langRadio)
+	g.launcherSel = widget.NewSelect(nil, func(name string) {
+		for i := range g.launchers {
+			if g.t(g.launchers[i].Name) == name {
+				g.setLauncher(g.launchers[i].ID)
+				return
+			}
+		}
+	})
+
+	topRow := container.NewBorder(
+		nil, nil, g.launcherSel, nil,
+		container.NewCenter(g.langRadio),
+	)
 
 	g.combLabel = widget.NewLabel("")
 	g.combLabel.Wrapping = fyne.TextWrapWord
 
 	g.combCount = widget.NewLabel("")
 	g.combCount.TextStyle = fyne.TextStyle{Italic: true}
+
+	g.combWarn = canvas.NewText("", theme.ErrorColor())
+	g.combWarn.TextSize = 13
+	g.combWarn.TextStyle = fyne.TextStyle{Bold: true}
+
+	g.combHint = widget.NewLabel("")
+	g.combHint.TextStyle = fyne.TextStyle{Italic: true}
+	g.combHint.Wrapping = fyne.TextWrapWord
 
 	g.combCopyBtn = widget.NewButtonWithIcon("", theme.ContentCopyIcon(), func() {
 		g.copyCombination()
@@ -248,13 +334,15 @@ func (g *gui) build() {
 		),
 		nil, nil, nil,
 		container.NewVBox(
+			g.combWarn,
 			g.combLabel,
+			g.combHint,
 			g.combCopyBtn,
 		),
 	)
 
 	g.win.SetContent(container.NewBorder(
-		container.NewVBox(titleBar, langBar),
+		container.NewVBox(titleBar, topRow),
 		combBar, nil, nil, split,
 	))
 
@@ -342,8 +430,51 @@ func (g *gui) applyLang() {
 	g.combCopyBtn.Refresh()
 	g.clearBtn.Text = g.tr("clearSelection")
 	g.clearBtn.Refresh()
+	g.favBtn.Text = "★ " + g.tr("favoritesOnly")
+	g.favBtn.Refresh()
+	g.applyFavButton()
+
+	names := make([]string, len(g.launchers))
+	for i := range g.launchers {
+		names[i] = g.t(g.launchers[i].Name)
+	}
+	g.launcherSel.Options = names
+	if g.launcher != nil {
+		g.launcherSel.SetSelected(g.t(g.launcher.Name))
+	}
+
+	cats := map[string]bool{}
+	for _, c := range g.all {
+		cats[g.t(c.Category)] = true
+	}
+	g.catOptions = []string{g.tr("allCategories")}
+	for c := range cats {
+		g.catOptions = append(g.catOptions, c)
+	}
+	sort.Strings(g.catOptions[1:])
+	g.catSel.Options = g.catOptions
+	if g.catFilterPT != "" {
+		idx := -1
+		for i, o := range g.catOptions {
+			for _, c := range g.all {
+				if g.t(c.Category) == o && c.Category.PT == g.catFilterPT {
+					idx = i
+				}
+			}
+		}
+		if idx > 0 {
+			g.catSel.SetSelected(g.catOptions[idx])
+		} else {
+			g.catFilterPT = ""
+			g.catSel.SetSelected(g.catOptions[0])
+		}
+	} else {
+		g.catSel.SetSelected(g.catOptions[0])
+	}
+
 	g.updateCombination()
 	g.refreshDetail()
+	g.updateFavButton()
 }
 
 func (g *gui) refreshDetail() {
@@ -352,7 +483,7 @@ func (g *gui) refreshDetail() {
 		g.detailTitle.SetText(g.t(c.Title))
 		g.detailCat.SetText(g.tr("category") + g.t(c.Category))
 		g.detailCompat.SetText(g.tr("compatible") + g.t(c.Compat))
-		g.detailCmd.SetText(g.cmd(c))
+		g.detailCmd.SetText(g.displayCmd(c))
 		g.detailDesc.SetText(g.t(c.Description))
 	} else {
 		g.detailTitle.SetText(g.tr("noCommand"))
@@ -361,6 +492,7 @@ func (g *gui) refreshDetail() {
 		g.detailCmd.SetText("")
 		g.detailDesc.SetText("")
 	}
+	g.updateFavButton()
 }
 
 func (g *gui) setTheme(name string, persist bool) {
@@ -390,7 +522,7 @@ func (g *gui) toggle(idx int, v bool) {
 }
 
 func (g *gui) isWrapper(c Command) bool {
-	for _, w := range []string{"mangohud", "gamemoderun", "gamescope"} {
+	for _, w := range []string{"mangohud", "gamemoderun", "gamescope", "game-performance"} {
 		if strings.HasPrefix(c.Command, w) {
 			return true
 		}
@@ -407,7 +539,7 @@ func (g *gui) buildCombination() string {
 		c := g.all[i]
 		base := strings.TrimSpace(strings.TrimSuffix(g.cmd(c), "%command%"))
 		if g.isWrapper(c) {
-			wrappers = append(wrappers, base+"%command%")
+			wrappers = append(wrappers, base)
 		} else {
 			envs = append(envs, base)
 		}
@@ -418,21 +550,88 @@ func (g *gui) buildCombination() string {
 	if len(parts) == 0 {
 		return ""
 	}
-	return strings.Join(parts, " ") + " %command%"
+	line := strings.Join(parts, " ")
+	if g.launcher.HasCmd {
+		line += " %command%"
+	}
+	return line
+}
+
+// displayCmd adapta o comando ao launcher escolhido, removendo o
+// placeholder %command% quando o launcher não o usa.
+func (g *gui) displayCmd(c Command) string {
+	s := g.cmd(c)
+	if !g.launcher.HasCmd {
+		s = strings.TrimSpace(strings.TrimSuffix(s, "%command%"))
+	}
+	return s
+}
+
+// conflicts detecta variáveis duplicadas com valores diferentes e
+// opções mutuamente exclusivas entre os comandos selecionados.
+func (g *gui) conflicts() []string {
+	var out []string
+	vals := map[string]map[string]bool{}
+	var keys []string
+	hasAntiLag, hasReflex := false, false
+	for i := range g.all {
+		if !g.selected[i] {
+			continue
+		}
+		s := g.cmd(g.all[i])
+		for _, tok := range strings.Fields(s) {
+			k, v, ok := strings.Cut(tok, "=")
+			if !ok {
+				continue
+			}
+			if vals[k] == nil {
+				vals[k] = map[string]bool{}
+				keys = append(keys, k)
+			}
+			vals[k][v] = true
+		}
+		if strings.Contains(s, "LOW_LATENCY_LAYER_REFLEX") {
+			hasReflex = true
+		} else if strings.Contains(s, "LOW_LATENCY_LAYER") {
+			hasAntiLag = true
+		}
+	}
+	for _, k := range keys {
+		if len(vals[k]) > 1 {
+			vs := make([]string, 0, len(vals[k]))
+			for v := range vals[k] {
+				vs = append(vs, v)
+			}
+			sort.Strings(vs)
+			out = append(out, fmt.Sprintf(g.tr("conflictDuplicate"), k, strings.Join(vs, ", ")))
+		}
+	}
+	if hasAntiLag && hasReflex {
+		out = append(out, g.tr("conflictAntiLagReflex"))
+	}
+	return out
 }
 
 func (g *gui) updateCombination() {
 	n := len(g.selected)
 	comb := g.buildCombination()
+	g.combHint.SetText(g.t(g.launcher.Hint))
 	if n == 0 {
 		g.combLabel.SetText(g.tr("noCommandSelected"))
 		g.combCount.SetText("")
+		g.combWarn.Text = ""
 		g.combCopyBtn.Disable()
 		return
 	}
 	g.combLabel.SetText(comb)
 	g.combCount.SetText(g.tr("selectedCount") + strconv.Itoa(n))
 	g.combCopyBtn.Enable()
+	if warns := g.conflicts(); len(warns) > 0 {
+		g.combWarn.Text = g.tr("warning") + strings.Join(warns, "\n")
+	} else {
+		g.combWarn.Text = ""
+	}
+	g.combWarn.Refresh()
 }
 
 func (g *gui) copyCombination() {
@@ -443,6 +642,54 @@ func (g *gui) copyCombination() {
 	g.win.Clipboard().SetContent(comb)
 	g.status.SetText(g.tr("copied") + comb)
 	g.status.Refresh()
+}
+
+func (g *gui) setLauncher(id string) {
+	for i := range g.launchers {
+		if g.launchers[i].ID == id {
+			g.launcher = &g.launchers[i]
+			break
+		}
+	}
+	g.app.Preferences().SetString("launcher", g.launcher.ID)
+	g.updateCombination()
+	g.refreshDetail()
+}
+
+func (g *gui) toggleFav(idx int) {
+	if g.favs[idx] {
+		delete(g.favs, idx)
+	} else {
+		g.favs[idx] = true
+	}
+	var ids []string
+	for i := range g.favs {
+		ids = append(ids, strconv.Itoa(i))
+	}
+	sort.Strings(ids)
+	g.app.Preferences().SetStringList("favs", ids)
+	g.updateFavButton()
+	if g.favOnly {
+		g.applyFilter()
+	}
+}
+
+func (g *gui) updateFavButton() {
+	if g.current >= 0 && g.favs[g.current] {
+		g.favToggleBtn.Text = "★ " + g.tr("removeFavorite")
+	} else {
+		g.favToggleBtn.Text = "☆ " + g.tr("addFavorite")
+	}
+	g.favToggleBtn.Refresh()
+}
+
+func (g *gui) applyFavButton() {
+	if g.favOnly {
+		g.favBtn.Importance = widget.HighImportance
+	} else {
+		g.favBtn.Importance = widget.MediumImportance
+	}
+	g.favBtn.Refresh()
 }
 
 func (g *gui) clearSelection() {
@@ -456,8 +703,9 @@ func (g *gui) copyCurrent() {
 	if g.current < 0 {
 		return
 	}
-	g.win.Clipboard().SetContent(g.cmd(g.all[g.current]))
-	g.status.SetText(g.tr("copied") + g.cmd(g.all[g.current]))
+	cmd := g.displayCmd(g.all[g.current])
+	g.win.Clipboard().SetContent(cmd)
+	g.status.SetText(g.tr("copied") + cmd)
 	g.status.Refresh()
 }
 
@@ -465,6 +713,12 @@ func (g *gui) applyFilter() {
 	query := strings.ToLower(strings.TrimSpace(g.search.Text))
 	g.filtered = g.filtered[:0]
 	for i, c := range g.all {
+		if g.catFilterPT != "" && c.Category.PT != g.catFilterPT {
+			continue
+		}
+		if g.favOnly && !g.favs[i] {
+			continue
+		}
 		hay := strings.ToLower(c.Command + " " + c.CommandEN + " " + g.t(c.Title) + " " + g.t(c.Category) + " " + g.t(c.Description) + " " + g.t(c.Compat))
 		if query == "" || strings.Contains(hay, query) {
 			g.filtered = append(g.filtered, i)

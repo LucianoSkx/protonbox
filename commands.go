@@ -1193,5 +1193,245 @@ func commands() []Command {
 				EN: "Forces FNA (XNA-style game framework) to use D3D11 for rendering.",
 			},
 		},
+		{
+			Command:   "DXVK_ASYNC=1 %command%",
+			CommandEN: "DXVK_ASYNC=1 %command%",
+			Title: Localized{
+				PT: "DXVK async (compilação em segundo plano)",
+				EN: "Async DXVK (background compilation)",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "GE e CachyOS",
+				EN: "GE and CachyOS",
+			},
+			Description: Localized{
+				PT: "Ativa a compilação assíncrona de shaders do DXVK: o jogo inicia sem travar compilando shaders. Elimina grande parte do stutter nas primeiras execuções. Apenas em versões do Proton com o patch async (GE e CachyOS).",
+				EN: "Enables DXVK's asynchronous shader compilation: the game starts without stalling to compile shaders. Removes most of the stutter on first runs. Only in Proton builds with the async patch (GE and CachyOS).",
+			},
+		},
+		{
+			Command:   "MANGOHUD=1 %command%",
+			CommandEN: "MANGOHUD=1 %command%",
+			Title: Localized{
+				PT: "MangoHud via variável de ambiente",
+				EN: "MangoHud via environment variable",
+			},
+			Category: Localized{
+				PT: "Overlay e desempenho",
+				EN: "Overlay & Performance",
+			},
+			Compat: Localized{
+				PT: "Todos (exige mangohud instalado)",
+				EN: "All (requires mangohud)",
+			},
+			Description: Localized{
+				PT: "Alternativa ao wrapper mangohud: injeta o MangoHud via variável de ambiente. Útil em launchers que não aceitam wrappers (Heroic, Bottles) ou quando você precisa combinar com outros wrappers.",
+				EN: "Alternative to the mangohud wrapper: injects MangoHud via an environment variable. Useful in launchers that don't accept wrappers (Heroic, Bottles) or when you need to combine with other wrappers.",
+			},
+		},
+		{
+			Command:   "MANGOHUD_CONFIG=cpu_temp,gpu_temp,fps,frametime %command%",
+			CommandEN: "MANGOHUD_CONFIG=cpu_temp,gpu_temp,fps,frametime %command%",
+			Title: Localized{
+				PT: "MangoHud: configuração via env",
+				EN: "MangoHud: config via env",
+			},
+			Category: Localized{
+				PT: "Overlay e desempenho",
+				EN: "Overlay & Performance",
+			},
+			Compat: Localized{
+				PT: "Todos (exige mangohud instalado)",
+				EN: "All (requires mangohud)",
+			},
+			Description: Localized{
+				PT: "Define as métricas do MangoHud por jogo, sem mexer no MangoHud.conf global. Exemplo: cpu_temp,gpu_temp,fps,frametime. O MANGOHUD_CONFIG global do jogo tem prioridade sobre o do arquivo. Separe os itens com vírgula.",
+				EN: "Sets per-game MangoHud metrics without touching the global MangoHud.conf. Example: cpu_temp,gpu_temp,fps,frametime. Per-game MANGOHUD_CONFIG takes priority over the file's. Separate items with commas.",
+			},
+		},
+		{
+			Command:   "PROTON_FORCE_NVAPI=1 %command%",
+			CommandEN: "PROTON_FORCE_NVAPI=1 %command%",
+			Title: Localized{
+				PT: "Forçar NVAPI (com patente do Reflex)",
+				EN: "Force NVAPI (with Reflex patents)",
+			},
+			Category: Localized{
+				PT: "GPU",
+				EN: "GPU",
+			},
+			Compat: Localized{
+				PT: "GE (GPU NVIDIA)",
+				EN: "GE (NVIDIA GPU)",
+			},
+			Description: Localized{
+				PT: "Habilita o suporte a patentes do NVIDIA Reflex no dxvk-nvapi. Útil quando o menu de Reflex não aparece em jogos com suporte. Atenção: quebra o upgrade FSR 4 (PROTON_FSR4_UPGRADE).",
+				EN: "Enables NVIDIA Reflex patent support in dxvk-nvapi. Useful when the Reflex menu doesn't show in supported games. Warning: breaks the FSR 4 upgrade (PROTON_FSR4_UPGRADE).",
+			},
+		},
+		{
+			Command:   "PROTON_DISABLE_NVAPI=1 %command%",
+			CommandEN: "PROTON_DISABLE_NVAPI=1 %command%",
+			Title: Localized{
+				PT: "Desabilitar NVAPI",
+				EN: "Disable NVAPI",
+			},
+			Category: Localized{
+				PT: "GPU",
+				EN: "GPU",
+			},
+			Compat: Localized{
+				PT: "GE (GPU NVIDIA)",
+				EN: "GE (NVIDIA GPU)",
+			},
+			Description: Localized{
+				PT: "Desativa a biblioteca NVAPI dentro do Proton. Use se o NVAPI (PROTON_ENABLE_NVAPI=1) estiver causando crashes ou bugs em algum jogo.",
+				EN: "Disables the NVAPI library inside Proton. Use if NVAPI (PROTON_ENABLE_NVAPI=1) is causing crashes or bugs in some game.",
+			},
+		},
+		{
+			Command:   "ENABLE_HDR_WSI=1 %command%",
+			CommandEN: "ENABLE_HDR_WSI=1 %command%",
+			Title: Localized{
+				PT: "HDR WSI (NVIDIA)",
+				EN: "HDR WSI (NVIDIA)",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "NVIDIA (use com DXVK_HDR=1)",
+				EN: "NVIDIA (use with DXVK_HDR=1)",
+			},
+			Description: Localized{
+				PT: "Habilita a cadeia de swap HDR (WSI) no driver NVIDIA. Necessário para HDR em jogos Vulkan via DXVK quando o driver não ativa o HDR automaticamente.",
+				EN: "Enables the HDR swapchain (WSI) on the NVIDIA driver. Required for HDR in Vulkan games via DXVK when the driver doesn't enable HDR automatically.",
+			},
+		},
+		{
+			Command:   "DXVK_LOG_LEVEL=none %command%",
+			CommandEN: "DXVK_LOG_LEVEL=none %command%",
+			Title: Localized{
+				PT: "Silenciar log do DXVK",
+				EN: "Silence DXVK log",
+			},
+			Category: Localized{
+				PT: "Diagnóstico",
+				EN: "Diagnostics",
+			},
+			Compat: Localized{
+				PT: "Todos",
+				EN: "All",
+			},
+			Description: Localized{
+				PT: "Impede o DXVK de escrever o arquivo de log (d3d11.log / dxgi.log). Reduz escrita no disco e ganha um pouco de desempenho; útil quando o log não é necessário.",
+				EN: "Prevents DXVK from writing its log file (d3d11.log / dxgi.log). Reduces disk writes and slightly improves performance; useful when the log isn't needed.",
+			},
+		},
+		{
+			Command:   "gamescope -e -f -F fsr -- %command%",
+			CommandEN: "gamescope -e -f -F fsr -- %command%",
+			Title: Localized{
+				PT: "Gamescope exclusivo com FSR",
+				EN: "Exclusive gamescope with FSR",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "Todos (exige gamescope instalado)",
+				EN: "All (requires gamescope)",
+			},
+			Description: Localized{
+				PT: "Roda o jogo em modo exclusivo (sem compositor) dentro do gamescope com FSR integrado: o jogo renderiza na resolução interna e o FSR sobe a imagem para a resolução da tela. Ajuste a resolução com -w/-h (interna) e -W/-H (tela).",
+				EN: "Runs the game in exclusive mode (no compositor) inside gamescope with built-in FSR: the game renders at its internal resolution and FSR upscales to the screen resolution. Tune with -w/-h (internal) and -W/-H (screen).",
+			},
+		},
+		{
+			Command:   "WINE_VIRTUAL_DESKTOP=1920x1080 %command%",
+			CommandEN: "WINE_VIRTUAL_DESKTOP=1920x1080 %command%",
+			Title: Localized{
+				PT: "Desktop virtual do Wine",
+				EN: "Wine virtual desktop",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Todos (jogos que insistem na resolução errada)",
+				EN: "All (games stuck on the wrong resolution)",
+			},
+			Description: Localized{
+				PT: "Roda o jogo em uma janela de desktop virtual com a resolução indicada (tela do jogo dentro de uma janela). Resolve jogos que fixam resoluções erradas ou janelas quebradas em multi-monitor. Ajuste o valor para a resolução desejada.",
+				EN: "Runs the game inside a virtual desktop window at the given resolution (game screen inside a window). Fixes games stuck on wrong resolutions or broken windows on multi-monitor. Adjust the value to the desired resolution.",
+			},
+		},
+		{
+			Command:   "WINE_ESYNC=1 %command%",
+			CommandEN: "WINE_ESYNC=1 %command%",
+			Title: Localized{
+				PT: "ESync (Wine)",
+				EN: "ESync (Wine)",
+			},
+			Category: Localized{
+				PT: "Sincronização",
+				EN: "Synchronization",
+			},
+			Compat: Localized{
+				PT: "Wine (Lutris/Heroic/Bottles)",
+				EN: "Wine (Lutris/Heroic/Bottles)",
+			},
+			Description: Localized{
+				PT: "Ativa o ESync (eventfd) em runners de Wine puro, fora do Proton. Em geral o FSync (WINEFSYNC=1) é mais rápido; teste os dois se um jogo tiver problemas de sincronização.",
+				EN: "Enables ESync (eventfd) in plain Wine runners, outside Proton. FSync (WINEFSYNC=1) is usually faster; test both if a game has synchronization issues.",
+			},
+		},
+		{
+			Command:   "WINEFSYNC=1 %command%",
+			CommandEN: "WINEFSYNC=1 %command%",
+			Title: Localized{
+				PT: "FSync (Wine)",
+				EN: "FSync (Wine)",
+			},
+			Category: Localized{
+				PT: "Sincronização",
+				EN: "Synchronization",
+			},
+			Compat: Localized{
+				PT: "Wine (Lutris/Heroic/Bottles)",
+				EN: "Wine (Lutris/Heroic/Bottles)",
+			},
+			Description: Localized{
+				PT: "Ativa o FSync (futex) em runners de Wine puro, fora do Proton. Precisa de kernel com FUTEX_WAIT_MULTIPLE (6.6+). Se um jogo travar com FSync, teste WINE_ESYNC=1.",
+				EN: "Enables FSync (futex) in plain Wine runners, outside Proton. Requires a kernel with FUTEX_WAIT_MULTIPLE (6.6+). If a game crashes with FSync, try WINE_ESYNC=1.",
+			},
+		},
+		{
+			Command:   "game-performance %command%",
+			CommandEN: "game-performance %command%",
+			Title: Localized{
+				PT: "Modo de jogo do CachyOS",
+				EN: "CachyOS game mode",
+			},
+			Category: Localized{
+				PT: "Overlay e desempenho",
+				EN: "Overlay & Performance",
+			},
+			Compat: Localized{
+				PT: "CachyOS (requer cachyos-settings)",
+				EN: "CachyOS (requires cachyos-settings)",
+			},
+			Description: Localized{
+				PT: "Ativa o modo de desempenho do CachyOS enquanto o jogo roda: define o perfil de energia e o governor da CPU como \"performance\" durante o jogo e restaura ao fechar (via powerprofilesctl launch). Instale com: sudo pacman -S cachyos-settings. Para manter o screensaver ativo durante o jogo, use GAME_PERFORMANCE_SCREENSAVER_ON=1.",
+				EN: "Enables CachyOS performance mode while the game runs: sets the power profile and CPU governor to \"performance\" during the game and restores on exit (via powerprofilesctl launch). Install with: sudo pacman -S cachyos-settings. To keep the screensaver active during the game, use GAME_PERFORMANCE_SCREENSAVER_ON=1.",
+			},
+		},
 	}
 }
