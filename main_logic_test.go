@@ -47,6 +47,25 @@ func TestCombinationNoCmd(t *testing.T) {
 	}
 }
 
+func TestGamescopeNoCmdDropsTrailingDashDash(t *testing.T) {
+	g := &gui{all: commands(), selected: map[int]bool{}, launcher: launcherByID("heroic")}
+	g.selected[idxOf("gamescope -e -f -F fsr -- %command%")] = true
+	g.selected[idxOf("PROTON_LOG=1 %command%")] = true
+	got := g.buildCombination()
+	if strings.HasSuffix(got, "--") || strings.Contains(got, " -- ") {
+		t.Fatalf("heroic gamescope: linha quebrada com --: %q", got)
+	}
+	want := "gamescope -e -f -F fsr PROTON_LOG=1"
+	if got != want {
+		t.Fatalf("heroic gamescope: got %q want %q", got, want)
+	}
+	gsteam := &gui{all: commands(), selected: map[int]bool{}, launcher: launcherByID("steam")}
+	gsteam.selected[idxOf("gamescope -e -f -F fsr -- %command%")] = true
+	if got := gsteam.buildCombination(); !strings.Contains(got, " -- ") {
+		t.Fatalf("steam gamescope: esperado -- preservado, got %q", got)
+	}
+}
+
 func TestDisplayCmdStrips(t *testing.T) {
 	g := &gui{all: commands(), launcher: launcherByID("lutris")}
 	c := commands()[idxOf("PROTON_LOG=1 %command%")]

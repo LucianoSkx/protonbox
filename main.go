@@ -63,7 +63,7 @@ type gui struct {
 	all      []Command
 	filtered []int
 	selected map[int]bool
-	favs     map[int]bool
+	favs     map[string]bool
 	current  int
 	selID    int
 }
@@ -80,7 +80,7 @@ func main() {
 		all:      commands(),
 		lang:     "pt",
 		selected: map[int]bool{},
-		favs:     map[int]bool{},
+		favs:     map[string]bool{},
 	}
 	g.launchers = launchers()
 	g.launcher = &g.launchers[0]
@@ -95,9 +95,7 @@ func main() {
 		}
 	}
 	for _, s := range a.Preferences().StringListWithFallback("favs", nil) {
-		if i, err := strconv.Atoi(s); err == nil && i >= 0 && i < len(g.all) {
-			g.favs[i] = true
-		}
+		g.favs[s] = true
 	}
 	g.filtered = make([]int, len(g.all))
 	for i := range g.all {
@@ -538,6 +536,9 @@ func (g *gui) buildCombination() string {
 		}
 		c := g.all[i]
 		base := strings.TrimSpace(strings.TrimSuffix(g.cmd(c), "%command%"))
+		if !g.launcher.HasCmd {
+			base = strings.TrimSpace(strings.TrimSuffix(base, "--"))
+		}
 		if g.isWrapper(c) {
 			wrappers = append(wrappers, base)
 		} else {
@@ -657,14 +658,15 @@ func (g *gui) setLauncher(id string) {
 }
 
 func (g *gui) toggleFav(idx int) {
-	if g.favs[idx] {
-		delete(g.favs, idx)
+	key := g.all[idx].Command
+	if g.favs[key] {
+		delete(g.favs, key)
 	} else {
-		g.favs[idx] = true
+		g.favs[key] = true
 	}
-	var ids []string
-	for i := range g.favs {
-		ids = append(ids, strconv.Itoa(i))
+	ids := make([]string, 0, len(g.favs))
+	for k := range g.favs {
+		ids = append(ids, k)
 	}
 	sort.Strings(ids)
 	g.app.Preferences().SetStringList("favs", ids)
@@ -675,7 +677,7 @@ func (g *gui) toggleFav(idx int) {
 }
 
 func (g *gui) updateFavButton() {
-	if g.current >= 0 && g.favs[g.current] {
+	if g.current >= 0 && g.favs[g.all[g.current].Command] {
 		g.favToggleBtn.Text = "★ " + g.tr("removeFavorite")
 	} else {
 		g.favToggleBtn.Text = "☆ " + g.tr("addFavorite")
@@ -716,7 +718,7 @@ func (g *gui) applyFilter() {
 		if g.catFilterPT != "" && c.Category.PT != g.catFilterPT {
 			continue
 		}
-		if g.favOnly && !g.favs[i] {
+		if g.favOnly && !g.favs[c.Command] {
 			continue
 		}
 		hay := strings.ToLower(c.Command + " " + c.CommandEN + " " + g.t(c.Title) + " " + g.t(c.Category) + " " + g.t(c.Description) + " " + g.t(c.Compat))
