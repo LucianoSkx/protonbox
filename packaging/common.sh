@@ -2,7 +2,7 @@
 set -euo pipefail
 
 NAME="protoncommand"
-VERSION="0.2.1"
+VERSION="0.2.2"
 DESKTOP="packaging/protoncommand.desktop"
 ICON="assets/icon.png"
 DIST="dist"
