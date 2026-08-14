@@ -546,8 +546,8 @@ func (g *gui) buildCombination() string {
 		}
 	}
 	var parts []string
-	parts = append(parts, wrappers...)
 	parts = append(parts, envs...)
+	parts = append(parts, wrappers...)
 	if len(parts) == 0 {
 		return ""
 	}
