@@ -266,27 +266,27 @@ func commands() []Command {
 		{
 			Command: "PROTON_FSR4_UPGRADE=1 %command%",
 			Title: Localized{
-				PT: "Upgrade FSR 3.1 para FSR 4",
-				EN: "FSR 3.1 to FSR 4 upgrade",
+				PT: "Upgrade FSR 3.1 → FSR 4",
+				EN: "FSR 3.1 → FSR 4 upgrade",
 			},
 			Category: Localized{
 				PT: "Upscaling",
 				EN: "Upscaling",
 			},
 			Compat: Localized{
-				PT: "GE e CachyOS (GPU AMD)",
-				EN: "GE and CachyOS (AMD GPU)",
+				PT: "GE e CachyOS (GPU AMD RDNA3+/RDNA4)",
+				EN: "GE and CachyOS (AMD RDNA3+/RDNA4 GPU)",
 			},
 			Description: Localized{
-				PT: "Baixa automaticamente a amdxcffx64.dll e atualiza jogos com FSR 3.1 para FSR 4, com melhor qualidade de imagem. Dá para fixar a versão: PROTON_FSR4_UPGRADE=\"4.0.2\". Só funciona em GPUs AMD compatíveis (RDNA3+).",
-				EN: "Automatically downloads amdxcffx64.dll and upgrades games with FSR 3.1 to FSR 4, with better image quality. You can pin the version: PROTON_FSR4_UPGRADE=\"4.0.2\". Only works on compatible AMD GPUs (RDNA3+).",
+				PT: "Baixa automaticamente a amdxcffx64.dll e atualiza jogos com FSR 3.1 para FSR 4. Versão customizável: PROTON_FSR4_UPGRADE=\"4.0.2\" (default 4.0.2 no GE, 4.1.1 no CachyOS). Para RDNA3 use PROTON_FSR4_RDNA3_UPGRADE. Desativa Anti-Lag 2.",
+				EN: "Automatically downloads amdxcffx64.dll and upgrades games with FSR 3.1 to FSR 4. Custom version: PROTON_FSR4_UPGRADE=\"4.0.2\" (default 4.0.2 on GE, 4.1.1 on CachyOS). For RDNA3 use PROTON_FSR4_RDNA3_UPGRADE. Disables Anti-Lag 2.",
 			},
 		},
 		{
 			Command: "PROTON_DLSS_UPGRADE=1 %command%",
 			Title: Localized{
-				PT: "Upgrade do DLSS",
-				EN: "DLSS upgrade",
+				PT: "Upgrade DLSS (versão customizável)",
+				EN: "DLSS upgrade (custom version)",
 			},
 			Category: Localized{
 				PT: "Upscaling",
@@ -297,15 +297,15 @@ func commands() []Command {
 				EN: "GE and CachyOS (NVIDIA GPU)",
 			},
 			Description: Localized{
-				PT: "Baixa automaticamente versões mais novas das DLLs nvngx_dlss e substitui as do jogo, melhorando qualidade e desempenho do DLSS. Fixe a versão com PROTON_DLSS_UPGRADE=\"310.2\".",
-				EN: "Automatically downloads newer nvngx_dlss DLLs and replaces the game's, improving DLSS quality and performance. Pin the version with PROTON_DLSS_UPGRADE=\"310.2\".",
+				PT: "Baixa automaticamente versões mais novas das DLLs nvngx_dlss e substitui as do jogo. Fixe a versão: PROTON_DLSS_UPGRADE=\"310.2\". Também define DXVK_NVAPI_DRS_SETTINGS para o preset mais recente.",
+				EN: "Automatically downloads newer nvngx_dlss DLLs and replaces the game's. Pin version: PROTON_DLSS_UPGRADE=\"310.2\". Also sets DXVK_NVAPI_DRS_SETTINGS to latest preset.",
 			},
 		},
 		{
 			Command: "PROTON_XESS_UPGRADE=1 %command%",
 			Title: Localized{
-				PT: "Upgrade do XeSS",
-				EN: "XeSS upgrade",
+				PT: "Upgrade XeSS (Intel, versão customizável)",
+				EN: "XeSS upgrade (Intel, custom version)",
 			},
 			Category: Localized{
 				PT: "Upscaling",
@@ -316,8 +316,8 @@ func commands() []Command {
 				EN: "GE and CachyOS (Intel GPU)",
 			},
 			Description: Localized{
-				PT: "Baixa automaticamente a DLL do XeSS (Intel) e atualiza jogos para a versão mais recente do upscaler.",
-				EN: "Automatically downloads the XeSS (Intel) DLL and upgrades games to the latest upscaler version.",
+				PT: "Baixa automaticamente a DLL do XeSS (Intel) e atualiza jogos para a versão mais recente. Versão customizável: PROTON_XESS_UPGRADE=\"versão\".",
+				EN: "Automatically downloads the XeSS (Intel) DLL and upgrades games to the latest version. Custom version: PROTON_XESS_UPGRADE=\"version\".",
 			},
 		},
 		{
@@ -590,8 +590,8 @@ func commands() []Command {
 		{
 			Command: "PROTON_USE_OPTISCALER=1 %command%",
 			Title: Localized{
-				PT: "OptiScaler",
-				EN: "OptiScaler",
+				PT: "OptiScaler (injeção automática)",
+				EN: "OptiScaler (auto injection)",
 			},
 			Category: Localized{
 				PT: "Upscaling",
@@ -602,8 +602,8 @@ func commands() []Command {
 				EN: "CachyOS",
 			},
 			Description: Localized{
-				PT: "Ativa a injeção automática do OptiScaler, que permite usar FSR/DLSS/XeSS em jogos sem suporte nativo. Configure via PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\". Em desenvolvimento: nem todos os jogos funcionam.",
-				EN: "Enables automatic OptiScaler injection, letting you use FSR/DLSS/XeSS in games without native support. Configure via PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\". Work in progress: not all games work.",
+				PT: "Ativa a injeção automática do OptiScaler, permitindo FSR/DLSS/XeSS em jogos sem suporte nativo. Configure a DLL com PROTON_OPTISCALER_NAME (dxgi.dll, d3d11.dll, d3d12.dll) e o upscaler via PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\". Em desenvolvimento: nem todos os jogos funcionam.",
+				EN: "Enables automatic OptiScaler injection, letting you use FSR/DLSS/XeSS in games without native support. Configure DLL with PROTON_OPTISCALER_NAME (dxgi.dll, d3d11.dll, d3d12.dll) and upscaler via PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\". Work in progress: not all games work.",
 			},
 		},
 		{
@@ -989,8 +989,28 @@ func commands() []Command {
 				EN: "Standard Proton, GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Desativa o ntsync (sincronização no estilo Windows NT). Use se algum jogo apresentar problema com o ntsync ativo.",
-				EN: "Disables ntsync (Windows NT style synchronization). Use it if a game misbehaves with ntsync enabled.",
+				PT: "Desativa o ntsync (sincronização no estilo Windows NT). Use se algum jogo apresentar problema com o ntsync ativo. O ntsync agora é o padrão no Proton 11+.",
+				EN: "Disables ntsync (Windows NT style synchronization). Use it if a game misbehaves with ntsync enabled. ntsync is now the default in Proton 11+.",
+			},
+		},
+		{
+			Command:   "PROTON_USE_NTSYNC=1 %command%",
+			CommandEN: "PROTON_USE_NTSYNC=1 %command%",
+			Title: Localized{
+				PT: "Habilitar ntsync (OBSOLETO)",
+				EN: "Enable ntsync (DEPRECATED)",
+			},
+			Category: Localized{
+				PT: "Sincronização",
+				EN: "Synchronization",
+			},
+			Compat: Localized{
+				PT: "Obsoleto (Proton 11+ usa ntsync por padrão)",
+				EN: "Deprecated (Proton 11+ uses ntsync by default)",
+			},
+			Description: Localized{
+				PT: "OBSOLETO: o ntsync agora é ativado por padrão no Proton 11+. Esta variável não faz mais nada. Use PROTON_NO_NTSYNC=1 para desativar se necessário.",
+				EN: "DEPRECATED: ntsync is now enabled by default in Proton 11+. This variable does nothing. Use PROTON_NO_NTSYNC=1 to disable if needed.",
 			},
 		},
 		{
@@ -1431,6 +1451,386 @@ func commands() []Command {
 			Description: Localized{
 				PT: "Ativa o modo de desempenho do CachyOS enquanto o jogo roda: define o perfil de energia e o governor da CPU como \"performance\" durante o jogo e restaura ao fechar (via powerprofilesctl launch). Instale com: sudo pacman -S cachyos-settings. Para manter o screensaver ativo durante o jogo, use GAME_PERFORMANCE_SCREENSAVER_ON=1.",
 				EN: "Enables CachyOS performance mode while the game runs: sets the power profile and CPU governor to \"performance\" during the game and restores on exit (via powerprofilesctl launch). Install with: sudo pacman -S cachyos-settings. To keep the screensaver active during the game, use GAME_PERFORMANCE_SCREENSAVER_ON=1.",
+			},
+		},
+		{
+			Command:   "PROTON_FSR4_INDICATOR=1 %command%",
+			CommandEN: "PROTON_FSR4_INDICATOR=1 %command%",
+			Title: Localized{
+				PT: "Indicador FSR 4 (watermark)",
+				EN: "FSR 4 indicator (watermark)",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "GE (GPU AMD)",
+				EN: "GE (AMD GPU)",
+			},
+			Description: Localized{
+				PT: "Mostra um watermark no canto da tela confirmando que o FSR 4 está ativo. Útil para verificar se o PROTON_FSR4_UPGRADE funcionou.",
+				EN: "Shows a watermark in the corner confirming FSR 4 is active. Useful to verify PROTON_FSR4_UPGRADE worked.",
+			},
+		},
+		{
+			Command:   "PROTON_FSR4_RDNA3_UPGRADE=1 %command%",
+			CommandEN: "PROTON_FSR4_RDNA3_UPGRADE=1 %command%",
+			Title: Localized{
+				PT: "Upgrade FSR 4 para RDNA 3",
+				EN: "FSR 4 upgrade for RDNA 3",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "CachyOS (GPU AMD RDNA 3)",
+				EN: "CachyOS (AMD RDNA 3 GPU)",
+			},
+			Description: Localized{
+				PT: "Upgrade FSR 3.1 para FSR 4 em GPUs RDNA 3 (RX 7000). Aplica workarounds específicos RDNA 3 e usa DLL 4.0.0 por padrão. Versão customizável: PROTON_FSR4_RDNA3_UPGRADE=\"4.0.2\".",
+				EN: "FSR 3.1 to FSR 4 upgrade on RDNA 3 GPUs (RX 7000). Applies RDNA 3-specific workarounds and uses DLL 4.0.0 by default. Custom version: PROTON_FSR4_RDNA3_UPGRADE=\"4.0.2\".",
+			},
+		},
+		{
+			Command:   "PROTON_FSR3_UPGRADE=1 %command%",
+			CommandEN: "PROTON_FSR3_UPGRADE=1 %command%",
+			Title: Localized{
+				PT: "Upgrade para FSR 3.1",
+				EN: "FSR 3.1 upgrade",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "GE e CachyOS (GPU AMD)",
+				EN: "GE and CachyOS (AMD GPU)",
+			},
+			Description: Localized{
+				PT: "Baixa automaticamente a DLL do FSR 3.1 e atualiza jogos para usá-la. Versão customizável via PROTON_FSR3_UPGRADE=\"versão\".",
+				EN: "Automatically downloads the FSR 3.1 DLL and upgrades games to use it. Custom version via PROTON_FSR3_UPGRADE=\"version\".",
+			},
+		},
+		{
+			Command:   "PROTON_XESS_UPGRADE=1 %command%",
+			CommandEN: "PROTON_XESS_UPGRADE=1 %command%",
+			Title: Localized{
+				PT: "Upgrade do XeSS (Intel)",
+				EN: "XeSS upgrade (Intel)",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "GE e CachyOS (GPU Intel)",
+				EN: "GE and CachyOS (Intel GPU)",
+			},
+			Description: Localized{
+				PT: "Baixa automaticamente a DLL do XeSS (Intel) e atualiza jogos para a versão mais recente do upscaler. Versão customizável via PROTON_XESS_UPGRADE=\"versão\".",
+				EN: "Automatically downloads the XeSS (Intel) DLL and upgrades games to the latest upscaler version. Custom version via PROTON_XESS_UPGRADE=\"version\".",
+			},
+		},
+		{
+			Command:   "PROTON_DLSS_INDICATOR=1 %command%",
+			CommandEN: "PROTON_DLSS_INDICATOR=1 %command%",
+			Title: Localized{
+				PT: "Indicador DLSS (overlay)",
+				EN: "DLSS indicator (overlay)",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "GE (GPU NVIDIA)",
+				EN: "GE (NVIDIA GPU)",
+			},
+			Description: Localized{
+				PT: "Mostra um overlay DLSS no canto inferior esquerdo da tela. Mesmo efeito de FSR4_WATERMARK=1. Útil para confirmar se o DLSS está ativo.",
+				EN: "Shows a DLSS overlay at the bottom left of the screen. Same effect as FSR4_WATERMARK=1. Useful to confirm DLSS is active.",
+			},
+		},
+		{
+			Command:   "PROTON_ADD_CONFIG=config1,config2 %command%",
+			CommandEN: "PROTON_ADD_CONFIG=config1,config2 %command%",
+			Title: Localized{
+				PT: "Adicionar compat configs",
+				EN: "Add compat configs",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Passa uma lista de configs de compatibilidade (separadas por vírgula) via variável de ambiente. As configs são a primeira coluna das tabelas de variáveis na documentação do CachyOS.",
+				EN: "Pass a comma-separated list of compat configs via environment variable. The configs are the first column in the environment variable tables in CachyOS docs.",
+			},
+		},
+		{
+			Command:   "PROTON_LOCAL_SHADER_CACHE=1 %command%",
+			CommandEN: "PROTON_LOCAL_SHADER_CACHE=1 %command%",
+			Title: Localized{
+				PT: "Shader cache local por jogo",
+				EN: "Per-game local shader cache",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Habilita cache de shader por jogo mesmo se o pré-cache de shaders do Steam estiver desligado. Cria cache em <steamlibrary>/shadercache/<appid>. Valores de env do usuário têm prioridade.",
+				EN: "Enables per-game shader cache even if Steam's Shader Pre-Caching is off. Creates cache at <steamlibrary>/shadercache/<appid>. User-set env values take priority.",
+			},
+		},
+		{
+			Command:   "PROTON_MEDIA_FORCE_GST=1 %command%",
+			CommandEN: "PROTON_MEDIA_FORCE_GST=1 %command%",
+			Title: Localized{
+				PT: "Forçar GStreamer (mídia)",
+				EN: "Force GStreamer (media)",
+			},
+			Category: Localized{
+				PT: "Áudio",
+				EN: "Audio",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Força o uso do GStreamer para reprodução de vídeo/áudio em cutscenes. Corrige problemas de mídia em alguns jogos.",
+				EN: "Forces GStreamer for video/audio playback in cutscenes. Fixes media issues in some games.",
+			},
+		},
+		{
+			Command:   "PROTON_GST_VIDEO_ORIENTATION=90 %command%",
+			CommandEN: "PROTON_GST_VIDEO_ORIENTATION=90 %command%",
+			Title: Localized{
+				PT: "Rotar vídeo (GStreamer)",
+				EN: "Rotate video (GStreamer)",
+			},
+			Category: Localized{
+				PT: "Áudio",
+				EN: "Audio",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Muda a orientação/rotação de vídeos renderizados via GStreamer. Valores aceitos: os mesmos do plugin videoflip do GStreamer (ex.: 90, 180, 270, identity).",
+				EN: "Changes the orientation/rotation of videos rendered via GStreamer. Accepted values: same as GStreamer's videoflip plugin (e.g.: 90, 180, 270, identity).",
+			},
+		},
+		{
+			Command:   "PROTON_OPTISCALER_NAME=dxgi.dll %command%",
+			CommandEN: "PROTON_OPTISCALER_NAME=dxgi.dll %command%",
+			Title: Localized{
+				PT: "Escolher DLL do OptiScaler",
+				EN: "Choose OptiScaler DLL",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "CachyOS (com PROTON_USE_OPTISCALER=1)",
+				EN: "CachyOS (with PROTON_USE_OPTISCALER=1)",
+			},
+			Description: Localized{
+				PT: "Define qual DLL o OptiScaler deve injetar. Opções: dxgi.dll, d3d11.dll, d3d12.dll. Combine com PROTON_OPTISCALER_CONFIG para configuração completa.",
+				EN: "Sets which DLL OptiScaler should inject. Options: dxgi.dll, d3d11.dll, d3d12.dll. Combine with PROTON_OPTISCALER_CONFIG for full configuration.",
+			},
+		},
+		{
+			Command:   "PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\" %command%",
+			CommandEN: "PROTON_OPTISCALER_CONFIG=\"Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss\" %command%",
+			Title: Localized{
+				PT: "Configuração do OptiScaler",
+				EN: "OptiScaler configuration",
+			},
+			Category: Localized{
+				PT: "Upscaling",
+				EN: "Upscaling",
+			},
+			Compat: Localized{
+				PT: "CachyOS (com PROTON_USE_OPTISCALER=1)",
+				EN: "CachyOS (with PROTON_USE_OPTISCALER=1)",
+			},
+			Description: Localized{
+				PT: "Escreve configuração arbitrária no OptiScaler.ini via variável de ambiente (separada por ponto-e-vírgula). Exemplo: Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss. Evita erros, use apenas chaves válidas do OptiScaler.ini.",
+				EN: "Writes arbitrary OptiScaler.ini config via environment variable (semicolon-separated). Example: Upscalers.Dx11Upscaler=fsr31;Upscalers.Dx12Upscaler=dlss. Avoid mistakes, only use valid OptiScaler.ini keys.",
+			},
+		},
+		{
+			Command:   "DXVK_NVAPI_VKREFLEX=1 %command%",
+			CommandEN: "DXVK_NVAPI_VKREFLEX=1 %command%",
+			Title: Localized{
+				PT: "NVIDIA Reflex em Vulkan (VKREFLEX)",
+				EN: "NVIDIA Reflex in Vulkan (VKREFLEX)",
+			},
+			Category: Localized{
+				PT: "Latência",
+				EN: "Latency",
+			},
+			Compat: Localized{
+				PT: "GE e CachyOS (GPU NVIDIA; jogos Vulkan com Reflex)",
+				EN: "GE and CachyOS (NVIDIA GPU; Vulkan games with Reflex)",
+			},
+			Description: Localized{
+				PT: "Habilita a layer Vulkan Reflex do dxvk-nvapi para jogos como Portal RTX, Path of Exile 1/2, Doom TDA. Requer GPU NVIDIA e jogo com suporte nativo a Reflex em Vulkan.",
+				EN: "Enables dxvk-nvapi's Vulkan Reflex layer for games like Portal RTX, Path of Exile 1/2, Doom TDA. Requires NVIDIA GPU and game with native Vulkan Reflex support.",
+			},
+		},
+		{
+			Command:   "PROTON_VKREFLEX=1 %command%",
+			CommandEN: "PROTON_VKREFLEX=1 %command%",
+			Title: Localized{
+				PT: "NVIDIA Reflex em Vulkan (alias Proton)",
+				EN: "NVIDIA Reflex in Vulkan (Proton alias)",
+			},
+			Category: Localized{
+				PT: "Latência",
+				EN: "Latency",
+			},
+			Compat: Localized{
+				PT: "CachyOS (GPU NVIDIA; jogos Vulkan com Reflex)",
+				EN: "CachyOS (NVIDIA GPU; Vulkan games with Reflex)",
+			},
+			Description: Localized{
+				PT: "Alias do PROTON para DXVK_NVAPI_VKREFLEX. Habilita a layer Vulkan Reflex do dxvk-nvapi.",
+				EN: "Proton alias for DXVK_NVAPI_VKREFLEX. Enables dxvk-nvapi's Vulkan Reflex layer.",
+			},
+		},
+		{
+			Command:   "PROTON_ENABLE_HDR=1 %command%",
+			CommandEN: "PROTON_ENABLE_HDR=1 %command%",
+			Title: Localized{
+				PT: "HDR automático",
+				EN: "Auto HDR",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "GE e CachyOS (exige monitor HDR + compositor)",
+				EN: "GE and CachyOS (requires HDR monitor + compositor)",
+			},
+			Description: Localized{
+				PT: "Ativa HDR automaticamente nos jogos (seta DXVK_HDR=1). No CachyOS 11+, HDR é ativado por padrão; use DXVK_NO_HDR=1 para desativar. Em NVIDIA, combine com ENABLE_HDR_WSI=1.",
+				EN: "Enables auto HDR in games (sets DXVK_HDR=1). On CachyOS 11+, HDR is on by default; use DXVK_NO_HDR=1 to disable. On NVIDIA, combine with ENABLE_HDR_WSI=1.",
+			},
+		},
+		{
+			Command:   "PROTON_USE_WAYLAND=1 %command%",
+			CommandEN: "PROTON_USE_WAYLAND=1 %command%",
+			Title: Localized{
+				PT: "Driver Wayland (alias)",
+				EN: "Wayland driver (alias)",
+			},
+			Category: Localized{
+				PT: "Wayland",
+				EN: "Wayland",
+			},
+			Compat: Localized{
+				PT: "CachyOS (experimental)",
+				EN: "CachyOS (experimental)",
+			},
+			Description: Localized{
+				PT: "Alias de PROTON_ENABLE_WAYLAND. Ativa o driver winewayland (janela nativa Wayland).",
+				EN: "Alias for PROTON_ENABLE_WAYLAND. Enables the winewayland driver (native Wayland window).",
+			},
+		},
+		{
+			Command:   "PROTON_PREFER_SDL=1 %command%",
+			CommandEN: "PROTON_PREFER_SDL=1 %command%",
+			Title: Localized{
+				PT: "Input via SDL (alias)",
+				EN: "SDL input (alias)",
+			},
+			Category: Localized{
+				PT: "Input",
+				EN: "Input",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Alias de PROTON_USE_SDL. Usa input SDL em vez de HIDRAW/Steam Input.",
+				EN: "Alias for PROTON_USE_SDL. Uses SDL input instead of HIDRAW/Steam Input.",
+			},
+		},
+		{
+			Command:   "PROTON_NO_STEAMINPUT=1 %command%",
+			CommandEN: "PROTON_NO_STEAMINPUT=1 %command%",
+			Title: Localized{
+				PT: "Desabilitar Steam Input",
+				EN: "Disable Steam Input",
+			},
+			Category: Localized{
+				PT: "Input",
+				EN: "Input",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Desabilita completamente o Steam Input no Proton. Útil quando o Steam Input conflita com o controle nativo do jogo.",
+				EN: "Completely disables Steam Input in Proton. Useful when Steam Input conflicts with the game's native controller support.",
+			},
+		},
+		{
+			Command:   "WINE_BLOCK_HOSTS=host1.org,host2.net %command%",
+			CommandEN: "WINE_BLOCK_HOSTS=host1.org,host2.net %command%",
+			Title: Localized{
+				PT: "Bloquear hosts no Wine",
+				EN: "Block hosts in Wine",
+			},
+			Category: Localized{
+				PT: "Outros",
+				EN: "Other",
+			},
+			Compat: Localized{
+				PT: "Wine/Proton",
+				EN: "Wine/Proton",
+			},
+			Description: Localized{
+				PT: "Lista de hosts (separados por vírgula ou ponto-e-vírgula) que o Wine não deve conectar. Máximo 16 hosts, 256 chars cada. Ex.: WINE_BLOCK_HOSTS=telemetry.example.com,ads.example.net.",
+				EN: "List of hosts (comma or semicolon separated) that Wine should not connect to. Max 16 hosts, 256 chars each. E.g.: WINE_BLOCK_HOSTS=telemetry.example.com,ads.example.net.",
+			},
+		},
+		{
+			Command:   "PROTON_VKD3D_HEAP=1 %command%",
+			CommandEN: "PROTON_VKD3D_HEAP=1 %command%",
+			Title: Localized{
+				PT: "Config heap VKD3D",
+				EN: "VKD3D heap config",
+			},
+			Category: Localized{
+				PT: "Renderização",
+				EN: "Rendering",
+			},
+			Compat: Localized{
+				PT: "CachyOS",
+				EN: "CachyOS",
+			},
+			Description: Localized{
+				PT: "Habilita configuração de heap específica do VKD3D para melhor gerenciamento de memória em jogos D3D12.",
+				EN: "Enables VKD3D-specific heap configuration for better memory management in D3D12 games.",
 			},
 		},
 	}
