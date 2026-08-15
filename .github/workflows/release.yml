@@ -1,0 +1,59 @@
+name: Build Release Artifacts
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+          check-latest: true
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gcc pkg-config \
+            libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
+            libx11-dev libxext-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            libxkbcommon-dev libwayland-dev wayland-protocols \
+            libfuse2 dpkg-dev rpm
+
+      - name: Build .deb
+        run: bash build-deb.sh
+
+      - name: Init rpm db and build .rpm
+        run: |
+          sudo rpmdb --initdb --dbpath /var/lib/rpm
+          bash build-rpm.sh
+
+      - name: Build AppImage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+        run: bash build-appimage.sh
+
+      - name: List artifacts
+        run: ls -lh dist
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/protoncommand-*.AppImage
+            dist/protoncommand-*.deb
+            dist/protoncommand-*.rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
