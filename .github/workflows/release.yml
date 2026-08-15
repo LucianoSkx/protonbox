@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -44,13 +46,44 @@ jobs:
           APPIMAGE_EXTRACT_AND_RUN: "1"
         run: bash build-appimage.sh
 
+      - name: Prepare release notes from CHANGELOG
+        id: notes
+        run: |
+          python3 - <<'PY'
+          import re, subprocess, sys
+          tag = "${{ github.ref_name }}"
+          body = ""
+          try:
+              text = open("CHANGELOG.md", encoding="utf-8").read()
+              parts = re.split(r"\n# ", "\n" + text)
+              for p in parts:
+                  if p.strip().startswith(tag):
+                      body = p.strip()
+                      break
+          except FileNotFoundError:
+              pass
+          if not body:
+              prev = subprocess.run(
+                  ["git", "describe", "--tags", "--abbrev=0", "HEAD^"],
+                  capture_output=True, text=True,
+              ).stdout.strip()
+              rng = f"{prev}..HEAD" if prev else "HEAD"
+              log = subprocess.run(
+                  ["git", "log", "--pretty=format=- %s", rng],
+                  capture_output=True, text=True,
+              ).stdout.strip()
+              body = f"# {tag}\n\n## Commits\n" + (log or "(sem commits)")
+          open("release_body.md", "w", encoding="utf-8").write(body)
+          print(body[:200])
+          PY
+
       - name: List artifacts
         run: ls -lh dist
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          generate_release_notes: true
+          body_path: release_body.md
           files: |
             dist/protoncommand-*.AppImage
             dist/protoncommand-*.deb
