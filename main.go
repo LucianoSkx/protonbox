@@ -260,8 +260,8 @@ func (g *gui) build() {
 	g.logo.SetMinSize(fyne.NewSize(280, 80))
 	g.logo.Resize(fyne.NewSize(280, 80))
 
-	g.langRadio = widget.NewRadioGroup([]string{"Português", "English"}, func(v string) {
-		if v == "English" {
+	g.langRadio = widget.NewRadioGroup([]string{"Português", "Inglês"}, func(v string) {
+		if v == "Inglês" {
 			g.setLang("en", true)
 		} else if v != "" {
 			g.setLang("pt", true)
@@ -359,7 +359,7 @@ func (g *gui) buildConfigMenu() *fyne.Menu {
 	g.langPT = fyne.NewMenuItem("Português", func() {
 		g.setLang("pt", true)
 	})
-	g.langEN = fyne.NewMenuItem("English", func() {
+	g.langEN = fyne.NewMenuItem("Inglês", func() {
 		g.setLang("en", true)
 	})
 	g.themeSystem = fyne.NewMenuItem("", func() {
@@ -406,7 +406,7 @@ func (g *gui) setLang(lang string, persist bool) {
 
 func (g *gui) applyLang() {
 	if g.lang == "en" {
-		g.langRadio.SetSelected("English")
+		g.langRadio.SetSelected("Inglês")
 	} else {
 		g.langRadio.SetSelected("Português")
 	}
