@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name: protoncommand
-Version: 0.2.2
+Version: 0.3.0
 Release: 1%{?dist}
 Summary: Useful Proton launch commands manager
 License: MIT
