@@ -31,8 +31,8 @@ func commands() []Command {
 				EN: "Standard Proton, GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Gera um arquivo de log detalhado (steam-<appid>.log) na sua pasta pessoal, para diagnosticar travamentos e erros de desempenho do jogo. O arquivo aparece depois de fechar o jogo.",
-				EN: "Generates a detailed log file (steam-<appid>.log) in your home folder to help diagnose crashes and performance issues. The file appears after closing the game.",
+				PT: "Gera um arquivo de log detalhado (steam-<appid>.log) na sua pasta pessoal. Use quando o jogo trava, não abre ou tem erros de desempenho misteriosos — o log mostra o que falhou. O arquivo só aparece depois de fechar o jogo.",
+				EN: "Generates a detailed log file (steam-<appid>.log) in your home folder. Use when a game crashes, won't launch, or has mysterious performance issues — the log shows what failed. The file only appears after closing the game.",
 			},
 		},
 		{
@@ -50,8 +50,8 @@ func commands() []Command {
 				EN: "CachyOS",
 			},
 			Description: Localized{
-				PT: "Variação do PROTON_LOG com canais de áudio, para diagnosticar problemas de som (clipping, estalo ou áudio ausente) no driver PipeWire. Não suba o nível para +pipewire completo: o tracing total atrapalha o timing do áudio e causa mais estalos.",
-				EN: "PROTON_LOG variant with audio channels, to diagnose sound issues (clipping, crackling or missing audio) on the PipeWire driver. Don't go above warn+: full tracing perturbs audio timing and causes more crackling.",
+				PT: "Variação do PROTON_LOG focada em áudio, para diagnosticar problemas de som (clipping, estalo ou áudio ausente) no driver PipeWire. Use quando o áudio do jogo está estranho. Não suba para +pipewire completo: o tracing total atrapalha o timing do áudio e causa mais estalos.",
+				EN: "PROTON_LOG variant focused on audio, to diagnose sound issues (clipping, crackling or missing audio) on the PipeWire driver. Use when game audio is weird. Don't go above warn+: full tracing perturbs audio timing and causes more crackling.",
 			},
 		},
 		{
@@ -69,8 +69,8 @@ func commands() []Command {
 				EN: "Standard Proton, GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Redireciona os logs do Proton para a pasta indicada em vez da pasta pessoal. Útil para manter os logs organizados por jogo sem poluir o home.",
-				EN: "Redirects Proton logs to the given folder instead of your home directory. Useful to keep logs organized per game.",
+				PT: "Redireciona os logs do Proton para a pasta que você indicar (ex.: ~/proton-logs) em vez da pasta pessoal. Use para manter um log por jogo e evitar poluir o home quando você testa vários títulos.",
+				EN: "Redirects Proton logs to the folder you specify (e.g.: ~/proton-logs) instead of your home directory. Use to keep one log per game and avoid cluttering your home when testing several titles.",
 			},
 		},
 		{
@@ -88,8 +88,8 @@ func commands() []Command {
 				EN: "GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Ao rodar o jogo, o Proton grava scripts de depuração (os mesmos comandos usados para iniciar o jogo) em $PROTON_DEBUG_DIR/proton_$USER (padrão: /tmp). Ótimo para entender como o jogo foi lançado e reproduzir manualmente.",
-				EN: "When running the game, Proton writes debug scripts (the same commands used to launch the game) to $PROTON_DEBUG_DIR/proton_$USER (default: /tmp). Great to understand how the game was launched and reproduce it manually.",
+				PT: "Ao rodar o jogo, o Proton grava scripts de depuração (os mesmos comandos usados para iniciá-lo) em $PROTON_DEBUG_DIR/proton_$USER (padrão: /tmp). Use para entender exatamente como o jogo foi lançado e reproduzir o comando manualmente no terminal, útil para debugar launchers personalizados.",
+				EN: "When running the game, Proton writes debug scripts (the same commands used to launch it) to $PROTON_DEBUG_DIR/proton_$USER (default: /tmp). Use to see exactly how the game was launched and reproduce the command manually in a terminal — handy for debugging custom launchers.",
 			},
 		},
 		{
@@ -107,8 +107,8 @@ func commands() []Command {
 				EN: "Standard Proton, GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Grava logs de crash na pasta indicada. Atenção: não limpa logs antigos, então pode encher o disco se não for monitorado.",
-				EN: "Writes crash logs to the given folder. Warning: it does not clean old logs, so it can fill your disk if not monitored.",
+				PT: "Grava logs de crash na pasta que você indicar (ex.: ~/crash-reports). Útil para inspecionar o motivo de travamentos repetidos. Atenção: não limpa logs antigos, então pode encher o disco se não for monitorado de tempos em tempos.",
+				EN: "Writes crash logs to the folder you specify (e.g.: ~/crash-reports). Useful to inspect why a game keeps crashing. Warning: it does not clean old logs, so it can fill your disk if not cleared occasionally.",
 			},
 		},
 		{
@@ -126,8 +126,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Mostra na tela apenas os quadros por segundo (FPS) do jogo. É o overlay mais leve, ideal para um teste rápido sem poluir a tela.",
-				EN: "Shows only the frames per second (FPS) on screen. The lightest overlay, ideal for a quick test without cluttering the screen.",
+				PT: "Mostra apenas os quadros por segundo (FPS) do jogo na tela. É o overlay mais leve do DXVK — ideal para um teste rápido de desempenho sem poluir a tela com informações demais.",
+				EN: "Shows only the frames per second (FPS) on screen. The lightest DXVK overlay — ideal for a quick performance check without cluttering the screen with too much info.",
 			},
 		},
 		{
@@ -240,8 +240,8 @@ func commands() []Command {
 				EN: "All (Vulkan via DXVK)",
 			},
 			Description: Localized{
-				PT: "Ativa o upscaling FSR da AMD no modo fullscreen: o jogo renderiza em resolução menor e o FSR sobe a imagem, ganhando FPS em placas mais fracas. Combine com WINE_FULLSCREEN_FSR_STRENGTH=2 para ajustar a nitidez (0 = máximo, 5 = mínimo). Só funciona em jogos Vulkan.",
-				EN: "Enables AMD FSR upscaling in fullscreen: the game renders at a lower resolution and FSR upscales the image, gaining FPS on weaker GPUs. Combine with WINE_FULLSCREEN_FSR_STRENGTH=2 for sharpness (0 = max, 5 = min). Only works in Vulkan games.",
+				PT: "Ativa o upscaling FSR da AMD no modo fullscreen: o jogo renderiza em resolução menor e o FSR sobe a imagem, ganhando FPS em placas mais fracas. Combine com WINE_FULLSCREEN_FSR_STRENGTH=2 para ajustar a nitidez (0 = máxima, 5 = mínima). Só funciona em jogos Vulkan (não em D3D11).",
+				EN: "Enables AMD FSR upscaling in fullscreen: the game renders at a lower resolution and FSR upscales the image, gaining FPS on weaker GPUs. Combine with WINE_FULLSCREEN_FSR_STRENGTH=2 for sharpness (0 = max, 5 = min). Only works in Vulkan games (not D3D11).",
 			},
 		},
 		{
@@ -335,8 +335,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Força o Proton a usar a tradução OpenGL do Wine (wined3d) em vez do Vulkan (DXVK). Geralmente perde desempenho; só útil para testes em placas muito antigas sem suporte Vulkan.",
-				EN: "Forces Proton to use Wine's OpenGL translation (wined3d) instead of Vulkan (DXVK). Usually loses performance; only useful for testing on very old GPUs without Vulkan support.",
+				PT: "Força o Proton a usar a tradução OpenGL do Wine (wined3d) em vez do Vulkan (DXVK). Geralmente perde desempenho; use só quando o DXVK trava o jogo ou a placa é tão antiga que nem Vulkan 1.0 tem. Útil também para isolar se um bug é do DXVK ou do jogo.",
+				EN: "Forces Proton to use Wine's OpenGL translation (wined3d) instead of Vulkan (DXVK). Usually loses performance; use only when DXVK crashes the game or the GPU is so old it lacks even Vulkan 1.0. Also useful to isolate whether a bug is in DXVK or the game.",
 			},
 		},
 		{
@@ -392,8 +392,8 @@ func commands() []Command {
 				EN: "CachyOS (requires HDR monitor and compositor)",
 			},
 			Description: Localized{
-				PT: "Ativa HDR nos jogos via DXVK. Em NVIDIA com drivers mais antigos, combine com ENABLE_HDR_WSI=1. Desative com DXVK_NO_HDR=1 se o HDR automático estiver causando problemas.",
-				EN: "Enables HDR in games via DXVK. On NVIDIA with older drivers, combine with ENABLE_HDR_WSI=1. Disable with DXVK_NO_HDR=1 if automatic HDR is causing issues.",
+				PT: "Ativa HDR nos jogos via DXVK. Use quando o jogo tem opção de HDR mas não acende sozinho. Em NVIDIA com drivers mais antigos, combine com ENABLE_HDR_WSI=1. Se o HDR automático (CachyOS 11+) estiver causando problemas, desative com DXVK_NO_HDR=1.",
+				EN: "Enables HDR in games via DXVK. Use when the game has an HDR option but won't turn on by itself. On NVIDIA with older drivers, combine with ENABLE_HDR_WSI=1. If automatic HDR (CachyOS 11+) causes issues, disable with DXVK_NO_HDR=1.",
 			},
 		},
 		{
@@ -430,8 +430,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Desativa a sincronização por eventfd (ESync). Use como teste se o jogo estiver travando ou instável, para ver se a sincronização é a culpada.",
-				EN: "Disables eventfd-based synchronization (ESync). Use as a test if the game is crashing or unstable, to see if sync is the culprit.",
+				PT: "Desativa a sincronização por eventfd (ESync). Use como teste quando o jogo trava, congela ou tem travamentos esporádicos — se desativar resolver, o problema é na sincronização. Não muda nada se o jogo já roda bem.",
+				EN: "Disables eventfd-based synchronization (ESync). Use as a test when a game crashes, freezes, or has sporadic hitches — if disabling fixes it, sync was the culprit. Does nothing if the game already runs fine.",
 			},
 		},
 		{
@@ -449,8 +449,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Desativa a sincronização por futex (FSync). Útil para testar instabilidade ou incompatibilidade de um jogo com o FSync. (Em sistemas sem suporte a FUTEX_WAIT_MULTIPLE, já é desativado sozinho.)",
-				EN: "Disables futex-based synchronization (FSync). Useful to test instability or incompatibility of a game with FSync. (On systems without FUTEX_WAIT_MULTIPLE support, it's already disabled.)",
+				PT: "Desativa a sincronização por futex (FSync). Use como teste se o jogo trava ou tem travamentos estranhos — alterna com PROTON_NO_ESYNC=1 para descobrir qual sincronização é a culpada. (Em kernels sem FUTEX_WAIT_MULTIPLE, já vem desativado.)",
+				EN: "Disables futex-based synchronization (FSync). Use as a test if the game crashes or hitches weirdly — toggle with PROTON_NO_ESYNC=1 to find which sync is the culprit. (On kernels without FUTEX_WAIT_MULTIPLE, it's already off.)",
 			},
 		},
 		{
@@ -487,8 +487,8 @@ func commands() []Command {
 				EN: "All (hybrid laptops)",
 			},
 			Description: Localized{
-				PT: "Em laptops com GPU integrada + dedicada, força o jogo a rodar na placa de vídeo dedicada. Em alguns sistemas, use o valor com o índice da GPU: DRI_PRIME=pci-0000_01_00_0.",
-				EN: "On laptops with integrated + discrete GPUs, forces the game to run on the dedicated GPU. On some systems, use the GPU index value: DRI_PRIME=pci-0000_01_00_0.",
+				PT: "Em laptops com GPU integrada + dedicada, força o jogo a rodar na placa de vídeo dedicada (mais forte). Use quando o jogo está rodando na integrada e ficando lento. O índice exato da GPU aparece em `lspci | grep VGA`; ex.: DRI_PRIME=pci-0000_01_00_0.",
+				EN: "On laptops with integrated + discrete GPUs, forces the game to run on the dedicated (stronger) GPU. Use when the game is running on the integrated one and feels slow. The exact GPU index shows in `lspci | grep VGA`; e.g.: DRI_PRIME=pci-0000_01_00_0.",
 			},
 		},
 		{
@@ -544,8 +544,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Define qual driver de áudio o Wine usa. Padrão: pipewire,pulse,alsa. Exemplo: WINE_AUDIO_DRIVER=pulse força apenas o winepulse.drv.",
-				EN: "Sets which audio driver Wine uses. Default: pipewire,pulse,alsa. Example: WINE_AUDIO_DRIVER=pulse forces winepulse.drv only.",
+				PT: "Define qual driver de áudio o Wine usa, na ordem de preferência. Padrão: pipewire,pulse,alsa. Exemplo: WINE_AUDIO_DRIVER=pulse força só o winepulse.drv. Use para isolar problemas de áudio — se um driver falha, tente o próximo da lista.",
+				EN: "Sets which audio driver Wine uses, in order of preference. Default: pipewire,pulse,alsa. Example: WINE_AUDIO_DRIVER=pulse forces winepulse.drv only. Use to isolate audio problems — if one driver fails, try the next in the list.",
 			},
 		},
 		{
@@ -621,8 +621,8 @@ func commands() []Command {
 				EN: "All (AMD/Intel GPU; requires low_latency_layer)",
 			},
 			Description: Localized{
-				PT: "Ativa o low_latency_layer, que expõe a extensão VK_AMD_anti_lag em GPUs AMD e Intel — o Anti-Lag 2 passa a funcionar em jogos Vulkan (CS2 nativo, e via dxvk-nvapi em jogos Proton com proton-cachyos/GE, que já embutem o layer). Desative com DISABLE_LOW_LATENCY_LAYER=1.",
-				EN: "Enables low_latency_layer, which exposes the VK_AMD_anti_lag extension on AMD and Intel GPUs — Anti-Lag 2 now works in Vulkan games (native CS2, and via dxvk-nvapi in Proton games with proton-cachyos/GE, which already bundle the layer). Disable with DISABLE_LOW_LATENCY_LAYER=1.",
+				PT: "Ativa o low_latency_layer, que expõe a extensão VK_AMD_anti_lag em GPUs AMD e Intel — o Anti-Lag 2 passa a funcionar em jogos Vulkan (CS2 nativo, e via dxvk-nvapi em jogos Proton com proton-cachyos/GE, que já embutem o layer). Use para reduzir o input lag em jogos competitivos. Desative com DISABLE_LOW_LATENCY_LAYER=1 se causar travamentos.",
+				EN: "Enables low_latency_layer, which exposes the VK_AMD_anti_lag extension on AMD and Intel GPUs — Anti-Lag 2 now works in Vulkan games (native CS2, and via dxvk-nvapi in Proton games with proton-cachyos/GE, which already bundle the layer). Use to reduce input lag in competitive games. Disable with DISABLE_LOW_LATENCY_LAYER=1 if it causes crashes.",
 			},
 		},
 		{
@@ -697,8 +697,8 @@ func commands() []Command {
 				EN: "All",
 			},
 			Description: Localized{
-				PT: "Controla de onde cada DLL do jogo vem: n = nativa (a do jogo, usada por mods/wrappers como o dinput8 de jogos antigos), b = builtin (a do Proton). Ex.: dinput8=n,b força a DLL do próprio jogo. Separe várias DLLs com ponto-e-vírgula.",
-				EN: "Controls where each game DLL comes from: n = native (the game's own, used by mods/wrappers like dinput8 in old games), b = builtin (Proton's). E.g.: dinput8=n,b forces the game's own DLL. Separate multiple DLLs with semicolons.",
+				PT: "Controla de onde cada DLL do jogo vem: n = nativa (a do próprio jogo, usada por mods/wrappers como dinput8 em jogos antigos), b = builtin (a do Proton). Ex.: WINEDLLOVERRIDES=\"dinput8=n,b\" força a DLL nativa do jogo antes da builtin. Separe várias DLLs com ponto-e-vírgula. Útil para aplicar cracks, fixar controles ou contornar bibliotecas quebradas.",
+				EN: "Controls where each game DLL comes from: n = native (the game's own, used by mods/wrappers like dinput8 in old games), b = builtin (Proton's). E.g.: WINEDLLOVERRIDES=\"dinput8=n,b\" forces the game's native DLL before the builtin. Separate multiple DLLs with semicolons. Useful to apply cracks, fix controllers, or bypass broken libraries.",
 			},
 		},
 		{
@@ -969,8 +969,8 @@ func commands() []Command {
 				EN: "Standard Proton, GE and CachyOS",
 			},
 			Description: Localized{
-				PT: "Usa o d3d8.dll do DXVK em vez do d3d8 do Wine para jogos Direct3D 8.",
-				EN: "Use DXVK's d3d8.dll instead of Wine's d3d8 for Direct3D 8 games.",
+				PT: "Usa o d3d8.dll do DXVK em vez do d3d8 do Wine para jogos Direct3D 8. Use quando um jogo D3D8 antigo trava ou não renderiza — o DXVK costuma ser mais compatível que a tradução nativa do Wine.",
+				EN: "Uses DXVK's d3d8.dll instead of Wine's d3d8 for Direct3D 8 games. Use when an old D3D8 game crashes or fails to render — DXVK is usually more compatible than Wine's native translation.",
 			},
 		},
 		{
@@ -1209,8 +1209,8 @@ func commands() []Command {
 				EN: "FNA/XNA games (e.g. Celeste)",
 			},
 			Description: Localized{
-				PT: "Força o FNA (framework de jogos estilo XNA) a usar D3D11 para renderização.",
-				EN: "Forces FNA (XNA-style game framework) to use D3D11 for rendering.",
+				PT: "Força o FNA (framework de jogos estilo XNA, usado em indies como Celeste) a usar D3D11 para renderização. Use quando o jogo FNA abre com tela preta ou trava na inicialização — trocar o driver de renderização às vezes contorna o bug.",
+				EN: "Forces FNA (XNA-style game framework, used in indies like Celeste) to use D3D11 for rendering. Use when an FNA game shows a black screen or crashes on launch — switching the render driver sometimes bypasses the bug.",
 			},
 		},
 		{
@@ -1389,8 +1389,8 @@ func commands() []Command {
 				EN: "All (games stuck on the wrong resolution)",
 			},
 			Description: Localized{
-				PT: "Roda o jogo em uma janela de desktop virtual com a resolução indicada (tela do jogo dentro de uma janela). Resolve jogos que fixam resoluções erradas ou janelas quebradas em multi-monitor. Ajuste o valor para a resolução desejada.",
-				EN: "Runs the game inside a virtual desktop window at the given resolution (game screen inside a window). Fixes games stuck on wrong resolutions or broken windows on multi-monitor. Adjust the value to the desired resolution.",
+				PT: "Roda o jogo dentro de uma janela de desktop virtual na resolução indicada (ex.: 1920x1080). Use quando o jogo fixa resolução errada, abre em janela quebrada no multi-monitor ou ignora o fullscreen. Ajuste o valor para a resolução desejada.",
+				EN: "Runs the game inside a virtual desktop window at the given resolution (e.g.: 1920x1080). Use when a game locks onto the wrong resolution, opens a broken window on multi-monitor, or ignores fullscreen. Adjust the value to the resolution you want.",
 			},
 		},
 		{
@@ -1709,8 +1709,8 @@ func commands() []Command {
 				EN: "CachyOS (NVIDIA GPU; Vulkan games with Reflex)",
 			},
 			Description: Localized{
-				PT: "Alias do PROTON para DXVK_NVAPI_VKREFLEX. Habilita a layer Vulkan Reflex do dxvk-nvapi.",
-				EN: "Proton alias for DXVK_NVAPI_VKREFLEX. Enables dxvk-nvapi's Vulkan Reflex layer.",
+				PT: "Alias do Proton para DXVK_NVAPI_VKREFLEX. Habilita a layer Vulkan Reflex do dxvk-nvapi, necessária para Reflex funcionar em jogos Vulkan (Portal RTX, Path of Exile 1/2, Doom TDA). Mesma função da variável DXVK_NVAPI_VKREFLEX, só muda o nome.",
+				EN: "Proton alias for DXVK_NVAPI_VKREFLEX. Enables dxvk-nvapi's Vulkan Reflex layer, needed for Reflex in Vulkan games (Portal RTX, Path of Exile 1/2, Doom TDA). Same as DXVK_NVAPI_VKREFLEX, just a different name.",
 			},
 		},
 		{
@@ -1749,8 +1749,8 @@ func commands() []Command {
 				EN: "CachyOS (experimental)",
 			},
 			Description: Localized{
-				PT: "Alias de PROTON_ENABLE_WAYLAND. Ativa o driver winewayland (janela nativa Wayland).",
-				EN: "Alias for PROTON_ENABLE_WAYLAND. Enables the winewayland driver (native Wayland window).",
+				PT: "Alias de PROTON_ENABLE_WAYLAND. Ativa o driver winewayland (janela nativa Wayland, sem XWayland). Mesma função, nome diferente — use o que preferir. Veja PROTON_ENABLE_WAYLAND para os detalhes e limitações.",
+				EN: "Alias for PROTON_ENABLE_WAYLAND. Enables the winewayland driver (native Wayland window, no XWayland). Same function, different name — pick whichever you like. See PROTON_ENABLE_WAYLAND for details and limitations.",
 			},
 		},
 		{
@@ -1769,8 +1769,8 @@ func commands() []Command {
 				EN: "CachyOS",
 			},
 			Description: Localized{
-				PT: "Alias de PROTON_USE_SDL. Usa input SDL em vez de HIDRAW/Steam Input.",
-				EN: "Alias for PROTON_USE_SDL. Uses SDL input instead of HIDRAW/Steam Input.",
+				PT: "Alias de PROTON_USE_SDL. Usa input SDL em vez de HIDRAW/Steam Input. Mesma função, nome diferente. Útil quando o controle não é detectado ou se comporta mal — comum com o driver Wayland ativo.",
+				EN: "Alias for PROTON_USE_SDL. Uses SDL input instead of HIDRAW/Steam Input. Same function, different name. Useful when the controller isn't detected or misbehaves — common with the Wayland driver active.",
 			},
 		},
 		{
