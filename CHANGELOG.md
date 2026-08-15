@@ -1,3 +1,34 @@
+# v0.4.0
+
+Correções de nomenclatura e internacionalização do rótulo de idioma.
+
+## 🐛 Correções / Fixes
+
+- **Licença**: copyright atualizado de `ProtonBox contributors` para `protoncommand contributors` no `LICENSE`.
+- **README**: seção em Português agora diz "descrição em Português e Inglês" (antes "English").
+- **App**: o seletor de idioma e o menu de configurações passam a exibir **Inglês** em vez de "English" (PT e EN).
+
+## 📦 Pacotes / Packages
+
+| Formato | Arquivo | Uso |
+|---|---|---|
+| AppImage | `protoncommand-0.4.0.x86_64.AppImage` | qualquer distro |
+| Debian/Ubuntu | `protoncommand-0.4.0.x86_64.deb` | `sudo dpkg -i` |
+| Fedora/openSUSE | `protoncommand-0.4.0.x86_64.rpm` | `sudo rpm -i` |
+
+## 🛠️ Instalação rápida / Quick install
+
+```bash
+# AppImage
+chmod +x protoncommand-0.4.0.x86_64.AppImage && ./protoncommand-0.4.0.x86_64.AppImage
+
+# Debian/Ubuntu
+sudo dpkg -i protoncommand-0.4.0.x86_64.deb
+
+# Fedora/openSUSE
+sudo rpm -i protoncommand-0.4.0.x86_64.rpm
+```
+
 # v0.3.0
 
 Catálogo expandido de **73 para 93 comandos** e descrições reescritas com foco prático (sintoma → solução, exemplos de valores e consistência PT/EN).
